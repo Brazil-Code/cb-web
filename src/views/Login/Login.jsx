@@ -17,10 +17,8 @@ class Login extends Component {
     e.preventDefault();
 
     await Req.post("login", {
-      body: {
-        username: this.state.sUsername,
-        password: this.state.sPassword
-      }
+      username: this.state.sUsername,
+      password: this.state.sPassword
     })
       .then(res => {
         alert(res.data);
@@ -58,8 +56,9 @@ class Login extends Component {
                       name="username"
                       value={this.state.sUsername}
                       onChange={e =>
-                        this.setState({ userName: e.target.value })
-                      } />
+                        this.setState({ sUsername: e.target.value })
+                      }
+                    />
                   </div>
                   <div className="form-element form-stack">
                     <label for="password-login" className="form-label">
@@ -72,7 +71,8 @@ class Login extends Component {
                       value={this.state.sPassword}
                       onChange={e =>
                         this.setState({ sPassword: e.target.value })
-                      } />
+                      }
+                    />
                   </div>
                   <div className="form-element form-submit">
                     <button
