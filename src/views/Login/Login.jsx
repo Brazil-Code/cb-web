@@ -18,7 +18,7 @@ class Login extends Component {
 
     await Req.post("login", {
       body: {
-        unsername: "gabriel",
+        usernae: "gabriel",
         password: "123"
       }
     })
