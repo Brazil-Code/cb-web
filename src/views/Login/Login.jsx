@@ -6,8 +6,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
-      password: ""
+      sUsername: "",
+      sPassword: ""
     };
 
     this.login = this.login.bind(this);
@@ -17,10 +17,8 @@ class Login extends Component {
     e.preventDefault();
 
     await Req.post("login", {
-      body: {
-        usernae: this.state.userName,
-        password: this.state.password
-      }
+      username: this.state.sUsername,
+      password: this.state.sPassword
     })
       .then(res => {
         alert(res.data);
@@ -56,9 +54,9 @@ class Login extends Component {
                       id="username-login"
                       type="text"
                       name="username"
-                      value={this.state.userName}
+                      value={this.state.sUsername}
                       onChange={e =>
-                        this.setState({ userName: e.target.value })
+                        this.setState({ sUsername: e.target.value })
                       }
                     />
                   </div>
@@ -70,9 +68,9 @@ class Login extends Component {
                       id="password-login"
                       type="password"
                       name="password"
-                      value={this.state.password}
+                      value={this.state.sPassword}
                       onChange={e =>
-                        this.setState({ password: e.target.value })
+                        this.setState({ sPassword: e.target.value })
                       }
                     />
                   </div>
@@ -81,8 +79,7 @@ class Login extends Component {
                       id="logIn"
                       className="login"
                       type="submit"
-                      name="login"
-                    >
+                      name="login">
                       Entrar
                     </button>
                   </div>
