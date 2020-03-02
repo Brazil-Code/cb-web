@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import Req from "../../api";
 import "./style.css";
 
 class Login extends Component {
@@ -13,47 +13,74 @@ class Login extends Component {
     this.login = this.login.bind(this);
   }
 
-  login(e) {
+  login = async e => {
     e.preventDefault();
 
-    window.location.href = "/admin/dashboard";
-  }
+    await Req.post("login", {
+      body: {
+        unsername: "gabriel",
+        password: "123"
+      }
+    })
+      .then(res => {
+        console.log(res.data);
+        //caso o usuario e senha esteja correta
+        //key sera armazanada no localstorage
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    return;
+  };
 
   render() {
     return (
       <>
         <div id="back">
-          <canvas id="canvas" class="canvas-back"></canvas>
-          <div class="backRight"></div>
-          <div class="backLeft">{/*Imagem aqui*/}</div>
+          <canvas id="canvas" className="canvas-back"></canvas>
+          <div className="backRight"></div>
+          <div className="backLeft">{/*Imagem aqui*/}</div>
         </div>
         <div id="slideBox">
-          <div class="topLayer">
-            <div class="right">
-              <div class="content">
+          <div className="topLayer">
+            <div className="right">
+              <div className="content">
                 <h2>Clean Budget</h2>
-                <form id="form-login">
-                  <div class="form-element form-stack">
-                    <label for="username-login" class="form-label">
+                <form id="form-login" onSubmit={this.login}>
+                  <div className="form-element form-stack">
+                    <label for="username-login" className="form-label">
                       Usuario
                     </label>
-                    <input id="username-login" type="text" name="username" />
+                    <input
+                      id="username-login"
+                      type="text"
+                      name="username"
+                      value={this.state.userName}
+                      onChange={e =>
+                        this.setState({ userName: e.target.value })
+                      }
+                    />
                   </div>
-                  <div class="form-element form-stack">
-                    <label for="password-login" class="form-label">
+                  <div className="form-element form-stack">
+                    <label for="password-login" className="form-label">
                       Senha
                     </label>
                     <input
                       id="password-login"
                       type="password"
                       name="password"
+                      value={this.state.password}
+                      onChange={e =>
+                        this.setState({ password: e.target.value })
+                      }
                     />
                   </div>
-                  <div class="form-element form-submit">
+                  <div className="form-element form-submit">
                     <button
                       id="logIn"
-                      class="login"
-                      onClick={this.login}
+                      className="login"
+                      type="submit"
                       name="login"
                     >
                       Entrar
