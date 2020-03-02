@@ -18,12 +18,12 @@ class Login extends Component {
 
     await Req.post("login", {
       body: {
-        unsername: "gabriel",
-        password: "123"
+        usernae: this.state.userName,
+        password: this.state.password
       }
     })
       .then(res => {
-        console.log(res.data);
+        alert(res.data);
         //caso o usuario e senha esteja correta
         //key sera armazanada no localstorage
       })
