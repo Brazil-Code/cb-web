@@ -1,35 +1,24 @@
 import React, { Component } from "react";
-import Req from "../../api";
 import "./style.css";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sUsername: "",
-      sPassword: ""
+      username: "",
+      password: "",
     };
 
+    this.AuthenticationService = require('../../services/authentication.service');
     this.login = this.login.bind(this);
   }
 
   login = async e => {
     e.preventDefault();
 
-    await Req.post("login", {
-      username: this.state.sUsername,
-      password: this.state.sPassword
-    })
-      .then(res => {
-        alert(res.data);
-        //caso o usuario e senha esteja correta
-        //key sera armazanada no localstorage
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    return;
+    this.AuthenticationService.login(this.state.username, this.state.password).then(response => {
+      //this.props.history.location('/admin/dashboard');
+    });
   };
 
   render() {
@@ -38,7 +27,7 @@ class Login extends Component {
         <div id="back">
           <canvas id="canvas" className="canvas-back"></canvas>
           <div className="backRight"></div>
-          <div className="backLeft">{/*Imagem aqui*/}</div>
+          <div className="backLeft"></div>
         </div>
         <div id="slideBox">
           <div className="topLayer">
@@ -54,9 +43,9 @@ class Login extends Component {
                       id="username-login"
                       type="text"
                       name="username"
-                      value={this.state.sUsername}
+                      value={this.state.username}
                       onChange={e =>
-                        this.setState({ sUsername: e.target.value })
+                        this.setState({ username: e.target.value })
                       }
                     />
                   </div>
@@ -68,9 +57,9 @@ class Login extends Component {
                       id="password-login"
                       type="password"
                       name="password"
-                      value={this.state.sPassword}
+                      value={this.state.password}
                       onChange={e =>
-                        this.setState({ sPassword: e.target.value })
+                        this.setState({ password: e.target.value })
                       }
                     />
                   </div>
