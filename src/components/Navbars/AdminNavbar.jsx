@@ -1,4 +1,3 @@
-
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
@@ -29,14 +28,25 @@ class AdminNavbar extends React.Component {
       modalSearch: false,
       color: "navbar-transparent"
     };
+    this.sair = this.sair.bind(this);
   }
   componentDidMount() {
     window.addEventListener("resize", this.updateColor);
+    const st = sessionStorage.getItem("_token_id_1");
+    if (st === null) {
+      this.props.history.replace("/");
+    }
+    console.log(st);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateColor);
   }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
+  sair(props) {
+    sessionStorage.removeItem("_token_id_1");
+    this.props.history.replace("/login");
+  }
+
   updateColor = () => {
     if (window.innerWidth < 993 && this.state.collapseOpen) {
       this.setState({
@@ -132,7 +142,7 @@ class AdminNavbar extends React.Component {
                     </NavLink>
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">
-                      Notificacao de exemplo 2
+                        Notificacao de exemplo 2
                       </DropdownItem>
                     </NavLink>
                   </DropdownMenu>
@@ -156,11 +166,15 @@ class AdminNavbar extends React.Component {
                       <DropdownItem className="nav-item">Perfil</DropdownItem>
                     </NavLink>
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Configurações</DropdownItem>
+                      <DropdownItem className="nav-item">
+                        Configurações
+                      </DropdownItem>
                     </NavLink>
                     <DropdownItem divider tag="li" />
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Sair</DropdownItem>
+                      <DropdownItem onClick={this.sair} className="nav-item">
+                        Sair
+                      </DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
