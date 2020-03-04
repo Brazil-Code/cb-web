@@ -45,6 +45,7 @@ class AdminNavbar extends React.Component {
       modalSearch: false,
       color: "navbar-transparent"
     };
+    this.logout = this.logout.bind(this);
   }
   componentDidMount() {
     window.addEventListener("resize", this.updateColor);
@@ -64,6 +65,10 @@ class AdminNavbar extends React.Component {
       });
     }
   };
+  logout(e) {
+    sessionStorage.removeItem("ltoken");
+    this.props.history.replace("/");
+  }
   // this function opens and closes the collapse on small devices
   toggleCollapse = () => {
     if (this.state.collapseOpen) {
@@ -203,7 +208,9 @@ class AdminNavbar extends React.Component {
                     </NavLink>
                     <DropdownItem divider tag="li" />
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Log out</DropdownItem>
+                      <DropdownItem className="nav-item" onClick={this.logout}>
+                        Log out
+                      </DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
