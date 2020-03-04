@@ -1,4 +1,3 @@
-
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
@@ -13,17 +12,8 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
-  Table,
   Row,
-  Col,
-  UncontrolledTooltip
+  Col
 } from "reactstrap";
 
 // core components
@@ -56,8 +46,8 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
-                      <h5 className="card-category">Marketing</h5>
-                      <CardTitle tag="h2">Area Budget</CardTitle>
+                      <h5 className="card-category">Total Shipments</h5>
+                      <CardTitle tag="h2">Performance</CardTitle>
                     </Col>
                     <Col sm="6">
                       <ButtonGroup
@@ -152,8 +142,7 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <h5 className="card-category">Total Shipments</h5>
                   <CardTitle tag="h3">
-                    <i className="tim-icons icon-bell-55 text-info" />{" "}
-                    763,215
+                    <i className="tim-icons icon-bell-55 text-info" /> 763,215
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
