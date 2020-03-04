@@ -27,12 +27,12 @@
 }
 #LoginStyle .right #form label {
   font-size: 20px;
-  margin: 15px 0;
 }
 #LoginStyle .right #form input {
-  padding: 15px;
+  padding: 10px;
   border: 0px;
   border-bottom: 1px solid #2778f6;
+  margin-bottom: 40px;
   outline: 0;
 }
 #LoginStyle .right #form button {
@@ -41,5 +41,5 @@
   background: #2778f6;
   color: white;
   font-size: 20px;
-  border-radius: 5px;
+  width: 100px;
 }
