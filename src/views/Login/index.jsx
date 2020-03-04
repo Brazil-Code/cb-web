@@ -11,7 +11,7 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      error: false
+      Loading: false
     };
 
     this.login = this.login.bind(this);
@@ -19,6 +19,7 @@ class Login extends Component {
   }
 
   login = async e => {
+    this.setState({ Loading: true });
     e.preventDefault();
 
     await req
@@ -34,6 +35,7 @@ class Login extends Component {
       .catch(error => {
         this.setState({ error: true });
         this.notify("tr");
+        this.setState({ Loading: false });
       });
   };
 
@@ -62,7 +64,10 @@ class Login extends Component {
             <img src={logo}></img>
           </div>
           <div className="right">
-            <span id="title">Clean Budget</span>
+            <div className="box-title">
+              <span id="title">Clean Budget</span>
+              {this.state.Loading === true ? <div class="loader"></div> : <></>}
+            </div>
             <div className="react-notification-alert-container">
               <NotificationAlert ref="notificationAlert" />
             </div>
