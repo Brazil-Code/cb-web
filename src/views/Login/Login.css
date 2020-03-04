@@ -1,0 +1,45 @@
+#LoginStyle {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 100vh;
+  grid-template-areas: "left right";
+}
+
+#LoginStyle .right {
+  grid-area: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+#LoginStyle .left {
+  grid-area: left;
+  background: #2778f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#LoginStyle .right #form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  width: 80%;
+}
+#LoginStyle .right #form label {
+  font-size: 20px;
+  margin: 15px 0;
+}
+#LoginStyle .right #form input {
+  padding: 15px;
+  border: 0px;
+  border-bottom: 1px solid #2778f6;
+  outline: 0;
+}
+#LoginStyle .right #form button {
+  margin-top: 20px;
+  padding: 10px;
+  background: #2778f6;
+  color: white;
+  font-size: 20px;
+  border-radius: 5px;
+}
