@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   background: white;
+  flex-direction: column;
 }
 #LoginStyle .left {
   grid-area: left;
@@ -26,20 +27,35 @@
   width: 80%;
 }
 #LoginStyle .right #form label {
-  font-size: 20px;
-  margin: 15px 0;
+  font-size: 15px;
+  margin-bottom: -5px;
 }
 #LoginStyle .right #form input {
   padding: 15px;
   border: 0px;
   border-bottom: 1px solid #2778f6;
   outline: 0;
+  margin-bottom: 20px;
 }
 #LoginStyle .right #form button {
   margin-top: 20px;
   padding: 10px;
   background: #2778f6;
   color: white;
-  font-size: 20px;
-  border-radius: 5px;
+  font-size: 15px;
+  width: 80px;
+  height: 40px;
+  transition: 0.3s;
+}
+
+#LoginStyle .right #form button:hover {
+  transition: 0.3s;
+  border: 1px solid #2778f6;
+  background: white;
+  color: #2778f6;
+}
+.right #title {
+  width: 80%;
+  font-size: 40px;
+  color: #2778f6;
 }

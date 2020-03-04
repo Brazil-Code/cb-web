@@ -38,7 +38,7 @@ class Login extends Component {
   };
 
   notify = place => {
-    var type = "info";
+    var type = "danger";
     var options = {};
     options = {
       place: place,
@@ -62,11 +62,12 @@ class Login extends Component {
             <img src={logo}></img>
           </div>
           <div className="right">
+            <span id="title">Clean Budget</span>
             <div className="react-notification-alert-container">
               <NotificationAlert ref="notificationAlert" />
             </div>
             <form onSubmit={this.login} id="form">
-              <label for="userName">Usuario</label>
+              <label for="userName">Usuário</label>
               <input
                 type="text"
                 id="userName"
