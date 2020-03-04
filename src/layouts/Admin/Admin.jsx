@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
@@ -8,11 +7,10 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 
-import routes from "routes.js";
-
-import logo from "assets/img/default-avatar.png";
+import logo from "assets/img/logo.png";
+import RoutesAdmin from "./RotasAdmin";
+import MenuAdmin from "./MenuAdmin";
 
 var ps;
 
@@ -61,8 +59,10 @@ class Admin extends React.Component {
     document.documentElement.classList.toggle("nav-open");
     this.setState({ sidebarOpened: !this.state.sidebarOpened });
   };
+
   getRoutes = routes => {
-    return routes.map((prop, key) => {
+    //registra a rota de acordo com o perfil
+    return RoutesAdmin.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
           <Route
@@ -80,28 +80,30 @@ class Admin extends React.Component {
     this.setState({ backgroundColor: color });
   };
   getBrandText = path => {
-    for (let i = 0; i < routes.length; i++) {
+    for (let i = 0; i < RoutesAdmin.length; i++) {
       if (
         this.props.location.pathname.indexOf(
-          routes[i].layout + routes[i].path
+          RoutesAdmin[i].layout + RoutesAdmin[i].path
         ) !== -1
       ) {
-        return routes[i].name;
+        return RoutesAdmin[i].name;
       }
     }
     return "Brand";
   };
+
   render() {
     return (
       <>
         <div className="wrapper">
+          {/* renderiza o menu lateral */}
           <Sidebar
             {...this.props}
-            routes={routes}
+            routes={MenuAdmin}
             bgColor={this.state.backgroundColor}
             logo={{
-              outterLink: "https://www.cleanBudget.com.br",
-              text: "Clean Budget",
+              outterLink: "/",
+              text: "BRAZIL CODE",
               imgSrc: logo
             }}
             toggleSidebar={this.toggleSidebar}
@@ -111,23 +113,27 @@ class Admin extends React.Component {
             ref="mainPanel"
             data={this.state.backgroundColor}
           >
+            {/* topo do admin painel */}
             <AdminNavbar
               {...this.props}
               brandText={this.getBrandText(this.props.location.pathname)}
               toggleSidebar={this.toggleSidebar}
               sidebarOpened={this.state.sidebarOpened}
             />
-            <Switch>{this.getRoutes(routes)}</Switch>
+
+            {/* renderiza as viewes com as devidas informacoes */}
+            <Switch>{this.getRoutes(RoutesAdmin)}</Switch>
             {// we don't want the Footer to be rendered on map page
             this.props.location.pathname.indexOf("maps") !== -1 ? null : (
               <Footer fluid />
             )}
           </div>
         </div>
-        <FixedPlugin
+        {/* plugin de cor */}
+        {/* <FixedPlugin
           bgColor={this.state.backgroundColor}
           handleBgClick={this.handleBgClick}
-        />
+        /> */}
       </>
     );
   }

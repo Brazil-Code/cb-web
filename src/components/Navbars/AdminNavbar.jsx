@@ -1,3 +1,20 @@
+/*!
+
+=========================================================
+* Black Dashboard React v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/black-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
@@ -28,25 +45,14 @@ class AdminNavbar extends React.Component {
       modalSearch: false,
       color: "navbar-transparent"
     };
-    this.sair = this.sair.bind(this);
   }
   componentDidMount() {
     window.addEventListener("resize", this.updateColor);
-    const st = sessionStorage.getItem("_token_id_1");
-    if (st === null) {
-      this.props.history.replace("/");
-    }
-    console.log(st);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateColor);
   }
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
-  sair(props) {
-    sessionStorage.removeItem("_token_id_1");
-    this.props.history.replace("/login");
-  }
-
   updateColor = () => {
     if (window.innerWidth < 993 && this.state.collapseOpen) {
       this.setState({
@@ -123,6 +129,18 @@ class AdminNavbar extends React.Component {
             </button>
             <Collapse navbar isOpen={this.state.collapseOpen}>
               <Nav className="ml-auto" navbar>
+                <InputGroup className="search-bar">
+                  <Button
+                    color="link"
+                    data-target="#searchModal"
+                    data-toggle="modal"
+                    id="search-button"
+                    onClick={this.toggleModalSearch}
+                  >
+                    <i className="tim-icons icon-zoom-split" />
+                    <span className="d-lg-none d-md-block">Search</span>
+                  </Button>
+                </InputGroup>
                 <UncontrolledDropdown nav>
                   <DropdownToggle
                     caret
@@ -137,12 +155,27 @@ class AdminNavbar extends React.Component {
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">
-                        Notificacao de exemplo 1
+                        Mike John responded to your email
                       </DropdownItem>
                     </NavLink>
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">
-                        Notificacao de exemplo 2
+                        You have 5 more tasks
+                      </DropdownItem>
+                    </NavLink>
+                    <NavLink tag="li">
+                      <DropdownItem className="nav-item">
+                        Your friend Michael is in town
+                      </DropdownItem>
+                    </NavLink>
+                    <NavLink tag="li">
+                      <DropdownItem className="nav-item">
+                        Another notification
+                      </DropdownItem>
+                    </NavLink>
+                    <NavLink tag="li">
+                      <DropdownItem className="nav-item">
+                        Another one
                       </DropdownItem>
                     </NavLink>
                   </DropdownMenu>
@@ -162,19 +195,15 @@ class AdminNavbar extends React.Component {
                     <p className="d-lg-none">Log out</p>
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
-                    <NavLink href="/admin/user-profile">
-                      <DropdownItem className="nav-item">Perfil</DropdownItem>
+                    <NavLink tag="li">
+                      <DropdownItem className="nav-item">Profile</DropdownItem>
                     </NavLink>
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">
-                        Configurações
-                      </DropdownItem>
+                      <DropdownItem className="nav-item">Settings</DropdownItem>
                     </NavLink>
                     <DropdownItem divider tag="li" />
                     <NavLink tag="li">
-                      <DropdownItem onClick={this.sair} className="nav-item">
-                        Sair
-                      </DropdownItem>
+                      <DropdownItem className="nav-item">Log out</DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
