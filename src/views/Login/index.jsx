@@ -67,7 +67,7 @@ class Login extends Component {
       <>
         <div id="LoginStyle">
           <div className="left">
-            <img src={logo}></img>
+            <h1>Brasil code</h1>
           </div>
           <div className="right">
             <div className="box-title">
