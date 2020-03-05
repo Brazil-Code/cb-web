@@ -18,6 +18,12 @@ class Login extends Component {
     this.notify = this.notify.bind(this);
   }
 
+  componentDidMount(props) {
+    if (sessionStorage.getItem("ltoken") !== null) {
+      this.props.history.replace("/admin/dashboard");
+    }
+  }
+
   login = async e => {
     this.setState({ Loading: true });
     e.preventDefault();
