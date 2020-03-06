@@ -124,3 +124,10 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+#LoginStyle .left .ImgameLogo {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 3px solid white;
+}

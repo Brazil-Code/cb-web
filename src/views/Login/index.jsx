@@ -4,6 +4,7 @@ import { UncontrolledAlert, Button } from "reactstrap";
 import logo from "../../assets/img/logo.png";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
+import firebase from "../../firebase/";
 
 class Login extends Component {
   constructor(props) {
@@ -11,18 +12,33 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      Loading: false
+      Loading: false,
+      Image: ""
     };
 
     this.login = this.login.bind(this);
     this.notify = this.notify.bind(this);
+    this.handleImage = this.handleImage.bind(this);
   }
 
   componentDidMount(props) {
     if (sessionStorage.getItem("ltoken") !== null) {
       this.props.history.replace("/admin/dashboard");
     }
+    this.handleImage();
   }
+
+  handleImage = async () => {
+    await firebase.storage
+      .ref("image")
+      .child("user")
+      .child("gabriel")
+      .child("perfil.jpg")
+      .getDownloadURL()
+      .then(url => {
+        this.setState({ Image: url });
+      });
+  };
 
   login = async e => {
     this.setState({ Loading: true });
@@ -67,7 +83,11 @@ class Login extends Component {
       <>
         <div id="LoginStyle">
           <div className="left">
-            <h1>Brasil code</h1>
+            {this.state.Image !== "" ? (
+              <img className="ImgameLogo" src={this.state.Image}></img>
+            ) : (
+              <h1>Brasil code</h1>
+            )}
           </div>
           <div className="right">
             <div className="box-title">
