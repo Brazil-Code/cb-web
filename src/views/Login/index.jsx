@@ -56,7 +56,7 @@ class Login extends Component {
         </div>
       ),
       type: type,
-      icon: "tim-icons icon-bell-55",
+      icon: "tim-icons icon-alert-circle-exc",
       autoDismiss: 3
     };
     this.refs.notificationAlert.notificationAlert(options);
