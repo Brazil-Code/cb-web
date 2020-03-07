@@ -124,3 +124,15 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+#LoginStyle .left .ImgameLogo {
+  width: 40%;
+  min-width: 160px;
+  max-width: 250px;
+  min-height: 160px;
+  max-height: 250px;
+  height: 30%;
+
+  border-radius: 50%;
+  border: 3px solid white;
+}

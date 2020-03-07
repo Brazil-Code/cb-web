@@ -43,7 +43,8 @@ class AdminNavbar extends React.Component {
     this.state = {
       collapseOpen: false,
       modalSearch: false,
-      color: "navbar-transparent"
+      color: "navbar-transparent",
+      imageProfile: sessionStorage.getItem("imageProfile")
     };
     this.logout = this.logout.bind(this);
   }
@@ -67,6 +68,9 @@ class AdminNavbar extends React.Component {
   };
   logout(e) {
     sessionStorage.removeItem("ltoken");
+    sessionStorage.removeItem("firstName");
+    sessionStorage.removeItem("lastName");
+    sessionStorage.removeItem("email");
     this.props.history.replace("/");
   }
   // this function opens and closes the collapse on small devices
@@ -194,14 +198,19 @@ class AdminNavbar extends React.Component {
                     onClick={e => e.preventDefault()}
                   >
                     <div className="photo">
-                      <img alt="..." src={require("assets/img/anime3.png")} />
+                      <img src={this.state.imageProfile} alt="profile" />
                     </div>
                     <b className="caret d-none d-lg-block d-xl-block" />
                     <p className="d-lg-none">Log out</p>
                   </DropdownToggle>
                   <DropdownMenu className="dropdown-navbar" right tag="ul">
                     <NavLink tag="li">
-                      <DropdownItem className="nav-item">Profile</DropdownItem>
+                      <DropdownItem
+                        href="/admin/user-profile"
+                        className="nav-item"
+                      >
+                        Profile
+                      </DropdownItem>
                     </NavLink>
                     <NavLink tag="li">
                       <DropdownItem className="nav-item">Settings</DropdownItem>
