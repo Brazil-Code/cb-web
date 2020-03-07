@@ -25,18 +25,26 @@ class Login extends Component {
     if (sessionStorage.getItem("ltoken") !== null) {
       this.props.history.replace("/admin/dashboard");
     }
-    this.handleImage();
   }
 
-  handleImage = async () => {
+  componentDidUpdate(props) {
+    this.handleImage(this.state.username);
+  }
+
+  handleImage = async username => {
     await firebase.storage
       .ref("image")
       .child("user")
-      .child("gabriel")
+      .child(username)
       .child("perfil.jpg")
       .getDownloadURL()
       .then(url => {
         this.setState({ Image: url });
+      })
+      .catch(error => {
+        if (this.state.username === "") {
+          this.setState({ Image: "" });
+        }
       });
   };
 
@@ -52,6 +60,10 @@ class Login extends Component {
       .then(data => {
         this.setState({ error: false });
         sessionStorage.setItem("ltoken", data.data.token);
+        sessionStorage.setItem("firstName", data.data.firstName);
+        sessionStorage.setItem("lastName", data.data.lastName);
+        sessionStorage.setItem("email", data.data.email);
+        sessionStorage.setItem("imageProfile", this.state.Image);
         this.props.history.replace("/admin/dashboard");
       })
       .catch(error => {
