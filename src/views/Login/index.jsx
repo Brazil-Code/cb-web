@@ -64,6 +64,7 @@ class Login extends Component {
         sessionStorage.setItem("lastName", data.data.lastName);
         sessionStorage.setItem("email", data.data.email);
         sessionStorage.setItem("imageProfile", this.state.Image);
+        sessionStorage.setItem("userName", this.state.username);
         this.props.history.replace("/admin/dashboard");
       })
       .catch(error => {
