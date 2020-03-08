@@ -99,7 +99,7 @@ class Login extends Component {
             {this.state.Image !== "" ? (
               <img className="ImgameLogo" src={this.state.Image}></img>
             ) : (
-              <h1>Brasil code</h1>
+              <h1>Brazil Code</h1>
             )}
           </div>
           <div className="right">
