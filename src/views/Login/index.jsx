@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import req from "../../api/index";
-import { UncontrolledAlert, Button } from "reactstrap";
-import logo from "../../assets/img/logo.png";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
 import firebase from "../../firebase/";
@@ -97,7 +95,11 @@ class Login extends Component {
         <div id="LoginStyle">
           <div className="left">
             {this.state.Image !== "" ? (
-              <img className="ImgameLogo" src={this.state.Image}></img>
+              <img
+                className="ImgameLogo"
+                src={this.state.Image}
+                alt="img"
+              ></img>
             ) : (
               <h1>Brazil Code</h1>
             )}
@@ -105,22 +107,28 @@ class Login extends Component {
           <div className="right">
             <div className="box-title">
               <span id="title">Clean Budget</span>
-              {this.state.Loading === true ? <div class="loader"></div> : <></>}
+              {this.state.Loading === true ? (
+                <div className="loader"></div>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="react-notification-alert-container">
               <NotificationAlert ref="notificationAlert" />
             </div>
+
             <form onSubmit={this.login} id="form">
-              <label for="userName">Usuário</label>
+              <label htmlFor="userName">Usuário</label>
               <input
                 type="text"
                 id="userName"
                 value={this.state.username}
                 onChange={e => this.setState({ username: e.target.value })}
               />
-              <label for="current-password">Senha</label>
+              <label htmlFor="current-password">Senha</label>
               <input
                 type="password"
+                autoComplete="true"
                 id="current-password"
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}
