@@ -30,26 +30,17 @@ class Footer extends React.Component {
         <Container fluid>
           <Nav>
             <NavItem>
-              <NavLink href="javascript:void(0)">Creative Tim</NavLink>
+              <NavLink href="#">Brasil Code</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="javascript:void(0)">About Us</NavLink>
+              <NavLink href="#">Sobre Nos</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="javascript:void(0)">Blog</NavLink>
+              <NavLink href="#">Help Desk</NavLink>
             </NavItem>
           </Nav>
           <div className="copyright">
-            © {new Date().getFullYear()} made with{" "}
-            <i className="tim-icons icon-heart-2" /> by{" "}
-            <a
-              href="javascript:void(0)"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Creative Tim
-            </a>{" "}
-            for a better web.
+            © {new Date().getFullYear()} Create for Brasil Code.
           </div>
         </Container>
       </footer>
