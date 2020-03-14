@@ -1,6 +1,7 @@
 import Dashboard from "../../views/Dashboard";
 import UserProfile from "../../views/UserProfile";
 import Notifications from "../../views/Notifications";
+import Order from "../../views/Order";
 
 let Rotas = [
   {
@@ -23,6 +24,13 @@ let Rotas = [
     icon: "tim-icons icon-bell-55",
     component: Notifications,
     layout: "/admin"
+  },
+  {
+    path: "/Order", //url sem o admin
+    name: "Pedido", //Nome no menu
+    icon: "tim-icons icon-chart-pie-36", //icone
+    component: Order,
+    layout: "/admin" //tipo de layout padrao adm
   },
   {
     path: "/*",
