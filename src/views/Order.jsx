@@ -17,33 +17,15 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       purchase: [{ createUser: 1, observation: "teste" }],
-      Quotations: [
-        {
-          link: "http://quotation1.com",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        },
-        {
-          link: "http://teste.com.be",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        },
-        {
-          link: "http://teste.com.be",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        }
-      ]
+      Quotations: [],
+      maxQuotations: [1, 2, 3, 4, 5],
+      numQuotation: [1, 2, 3]
     };
+    this.addQuotations = this.addQuotations.bind(this);
+  }
+
+  addQuotations(data) {
+    console.log(data);
   }
 
   render() {
@@ -96,8 +78,15 @@ class UserProfile extends React.Component {
               </Card>
             </Col>
           </Row>
-          {this.state.Quotations.map((qt, i) => {
-            return <PriceQuotations key={i} nOrder={i + 1} />;
+          {/* componente aqui */}
+          {this.state.numQuotation.map(qt => {
+            return (
+              <PriceQuotations
+                addQuotations={this.addQuotations}
+                nOrder={qt}
+                key={qt}
+              />
+            );
           })}
 
           <Button className="btn-fill" color="primary">

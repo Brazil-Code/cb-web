@@ -20,16 +20,37 @@ class PriceQuotations extends React.Component {
       file: ""
     };
     this.totalValue = this.totalValue.bind(this);
+    this.addQuotations = this.addQuotations.bind(this);
   }
 
   totalValue = () => {
     this.setState({ totalValue: this.state.amount * this.state.unitValue });
   };
 
+  addQuotations() {
+    let {
+      link,
+      unitValue,
+      purchaseItem,
+      amount,
+      totalValue,
+      file
+    } = this.state;
+    let data = {
+      link,
+      unitValue,
+      purchaseItem,
+      amount,
+      totalValue,
+      file
+    };
+    this.props.addQuotations(data);
+  }
+
   render() {
     return (
       <Row onClick={this.totalValue}>
-        <Col md="12">
+        <Col md="12" onClick={this.addQuotations}>
           <Card>
             <CardHeader>
               <h5 className="title">Ordem {this.props.nOrder}</h5>
@@ -57,7 +78,7 @@ class PriceQuotations extends React.Component {
                         this.setState({ unitValue: e.target.value })
                       }
                       name="price"
-                      type="text"
+                      type="number"
                     />
                   </FormGroup>
                 </Col>
@@ -68,6 +89,7 @@ class PriceQuotations extends React.Component {
                       placeholder="Quantidade de prudtudo"
                       type="text"
                       value={this.state.amount}
+                      type="number"
                       onChange={e => this.setState({ amount: e.target.value })}
                     />
                   </FormGroup>
