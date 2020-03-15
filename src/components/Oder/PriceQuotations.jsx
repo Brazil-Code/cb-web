@@ -12,18 +12,23 @@ class PriceQuotations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      link: "",
-      unitValue: 0,
+      link: "http://quotation1.com",
+      unitValue: "",
       purchaseItem: "",
-      amount: 0,
+      amount: "",
       totalValue: 0,
       file: ""
     };
+    this.totalValue = this.totalValue.bind(this);
   }
+
+  totalValue = () => {
+    this.setState({ totalValue: this.state.amount * this.state.unitValue });
+  };
 
   render() {
     return (
-      <Row>
+      <Row onClick={this.totalValue}>
         <Col md="12">
           <Card>
             <CardHeader>
