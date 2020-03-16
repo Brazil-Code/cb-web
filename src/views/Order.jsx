@@ -117,7 +117,7 @@ class UserProfile extends React.Component {
 
           <Button
             className="btn-fill"
-            color="primary"
+            color="info"
             onClick={this.FinishQuotations}
           >
             Finalizar

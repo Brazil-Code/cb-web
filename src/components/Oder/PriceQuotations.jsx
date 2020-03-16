@@ -116,7 +116,7 @@ class PriceQuotations extends React.Component {
                   <Button
                     size="sm"
                     className="btn-fill"
-                    color="wait"
+                    color="danger"
                     onClick={this.addQuotations}
                   >
                     salvar
