@@ -16,16 +16,42 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchase: [{ createUser: 1, observation: "teste" }],
+      purchase: { createUser: 1, observation: "teste" },
       Quotations: [],
       maxQuotations: [1, 2, 3, 4, 5],
       numQuotation: [1, 2, 3]
     };
     this.addQuotations = this.addQuotations.bind(this);
+    this.FinishQuotations = this.FinishQuotations.bind(this);
   }
 
   addQuotations(data) {
-    console.log(data);
+    let Quotations = [];
+    let equats = false;
+    Quotations.push(...this.state.Quotations);
+    Quotations.map(qt => {
+      if (qt.key === data.key) {
+        qt.link = data.link;
+        qt.unitValue = data.unitValue;
+        qt.purchaseItem = data.purchaseItem;
+        qt.amount = data.amount;
+        qt.totalValue = data.totalValue;
+        qt.file = data.file;
+        equats = true;
+      }
+    });
+    if (equats === false) {
+      Quotations.push(data);
+    }
+    this.setState({ Quotations });
+    console.log(this.state.Quotations);
+  }
+
+  FinishQuotations() {
+    let priceQuotations = this.state.Quotations;
+    let obj = { ...this.state.purchase, priceQuotations };
+
+    console.log(obj);
   }
 
   render() {
@@ -89,8 +115,12 @@ class UserProfile extends React.Component {
             );
           })}
 
-          <Button className="btn-fill" color="primary">
-            Save
+          <Button
+            className="btn-fill"
+            color="primary"
+            onClick={this.FinishQuotations}
+          >
+            Finalizar
           </Button>
         </div>
       </>
