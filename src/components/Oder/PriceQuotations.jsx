@@ -6,12 +6,14 @@ import {
   FormGroup,
   Input,
   Row,
-  Col
+  Col,
+  Button
 } from "reactstrap";
 class PriceQuotations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      key: this.props.nOrder,
       link: "http://quotation1.com",
       unitValue: "",
       purchaseItem: "",
@@ -27,30 +29,23 @@ class PriceQuotations extends React.Component {
     this.setState({ totalValue: this.state.amount * this.state.unitValue });
   };
 
-  addQuotations() {
-    let {
-      link,
-      unitValue,
-      purchaseItem,
-      amount,
-      totalValue,
-      file
-    } = this.state;
+  async addQuotations() {
     let data = {
-      link,
-      unitValue,
-      purchaseItem,
-      amount,
-      totalValue,
-      file
+      key: await this.state.key,
+      link: await this.state.link,
+      unitValue: await this.state.unitValue,
+      purchaseItem: await this.state.purchaseItem,
+      amount: await this.state.amount,
+      totalValue: await this.state.totalValue,
+      file: await this.state.file
     };
-    this.props.addQuotations(data);
+    await this.props.addQuotations(data);
   }
 
   render() {
     return (
       <Row onClick={this.totalValue}>
-        <Col md="12" onClick={this.addQuotations}>
+        <Col md="12">
           <Card>
             <CardHeader>
               <h5 className="title">Ordem {this.props.nOrder}</h5>
@@ -118,6 +113,14 @@ class PriceQuotations extends React.Component {
                       }
                     />
                   </FormGroup>
+                  <Button
+                    size="sm"
+                    className="btn-fill"
+                    color="wait"
+                    onClick={this.addQuotations}
+                  >
+                    salvar
+                  </Button>
                 </Col>
               </Row>
             </CardBody>
