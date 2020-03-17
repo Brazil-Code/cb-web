@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import req from "../../api/index";
-import { UncontrolledAlert, Button } from "reactstrap";
-import logo from "../../assets/img/logo.png";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
+import firebase from "../../firebase/";
 
 class Login extends Component {
   constructor(props) {
@@ -11,14 +10,44 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      error: false
+      Loading: false,
+      Image: ""
     };
-
+    this.getUserFoto = this.getUserFoto.bind(this);
     this.login = this.login.bind(this);
     this.notify = this.notify.bind(this);
+    this.handleImage = this.handleImage.bind(this);
   }
 
+  componentDidMount(props) {
+    if (sessionStorage.getItem("ltoken") !== null) {
+      this.props.history.replace("/admin/dashboard");
+    }
+  }
+
+  getUserFoto() {
+    this.handleImage(this.state.username);
+  }
+
+  handleImage = async username => {
+    await firebase.storage
+      .ref("image")
+      .child("user")
+      .child(username)
+      .child("perfil.jpg")
+      .getDownloadURL()
+      .then(url => {
+        this.setState({ Image: url });
+      })
+      .catch(error => {
+        if (this.state.username === "") {
+          this.setState({ Image: "" });
+        }
+      });
+  };
+
   login = async e => {
+    this.setState({ Loading: true });
     e.preventDefault();
 
     await req
@@ -29,11 +58,17 @@ class Login extends Component {
       .then(data => {
         this.setState({ error: false });
         sessionStorage.setItem("ltoken", data.data.token);
+        sessionStorage.setItem("firstName", data.data.firstName);
+        sessionStorage.setItem("lastName", data.data.lastName);
+        sessionStorage.setItem("email", data.data.email);
+        sessionStorage.setItem("imageProfile", this.state.Image);
+        sessionStorage.setItem("userName", this.state.username);
         this.props.history.replace("/admin/dashboard");
       })
       .catch(error => {
         this.setState({ error: true });
         this.notify("tr");
+        this.setState({ Loading: false });
       });
   };
 
@@ -48,7 +83,7 @@ class Login extends Component {
         </div>
       ),
       type: type,
-      icon: "tim-icons icon-bell-55",
+      icon: "tim-icons icon-alert-circle-exc",
       autoDismiss: 3
     };
     this.refs.notificationAlert.notificationAlert(options);
@@ -59,24 +94,42 @@ class Login extends Component {
       <>
         <div id="LoginStyle">
           <div className="left">
-            <img src={logo}></img>
+            {this.state.Image !== "" ? (
+              <img
+                className="ImgameLogo"
+                src={this.state.Image}
+                alt="img"
+              ></img>
+            ) : (
+              <h1>Brazil Code</h1>
+            )}
           </div>
           <div className="right">
-            <span id="title">Clean Budget</span>
+            <div className="box-title">
+              <span id="title">Clean Budget</span>
+              {this.state.Loading === true ? (
+                <div className="loader"></div>
+              ) : (
+                <></>
+              )}
+            </div>
             <div className="react-notification-alert-container">
               <NotificationAlert ref="notificationAlert" />
             </div>
+
             <form onSubmit={this.login} id="form">
-              <label for="userName">Usuário</label>
+              <label htmlFor="userName">Usuário</label>
               <input
                 type="text"
                 id="userName"
                 value={this.state.username}
                 onChange={e => this.setState({ username: e.target.value })}
               />
-              <label for="current-password">Senha</label>
+              <label htmlFor="current-password">Senha</label>
               <input
                 type="password"
+                autoComplete="true"
+                onFocus={this.getUserFoto}
                 id="current-password"
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}

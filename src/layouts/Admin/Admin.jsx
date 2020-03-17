@@ -24,6 +24,10 @@ class Admin extends React.Component {
     };
   }
   componentDidMount() {
+    if (sessionStorage.getItem("ltoken") === null) {
+      this.props.history.replace("/");
+    }
+
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
       document.documentElement.classList.remove("perfect-scrollbar-off");
