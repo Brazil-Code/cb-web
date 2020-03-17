@@ -1,5 +1,5 @@
 import React from "react";
-import PriceQuotations from "../components/Oder/PriceQuotations";
+import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
 // reactstrap components
 import {
   Button,
@@ -68,21 +68,19 @@ class UserProfile extends React.Component {
                   <Row>
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
-                        <label>Area</label>
+                        <label>Área</label>
                         <Input
                           defaultValue="Informatica"
                           disabled
-                          placeholder="Informatica"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
                     <Col className="px-md-1" md="6">
                       <FormGroup>
-                        <label>Username</label>
+                        <label>Usuário</label>
                         <Input
                           defaultValue={sessionStorage.getItem("userName")}
-                          placeholder="Username"
                           type="text"
                           disabled
                         />
@@ -92,9 +90,9 @@ class UserProfile extends React.Component {
                   <Row>
                     <Col className="pr-md-1" md="12">
                       <FormGroup>
-                        <label>Descricao do Produto</label>
+                        <label>Observação</label>
                         <Input
-                          placeholder="Digite uma breve descricao"
+                          placeholder="Observações gerais sobre o produto"
                           type="text"
                         />
                       </FormGroup>
@@ -109,7 +107,7 @@ class UserProfile extends React.Component {
             return (
               <PriceQuotations
                 addQuotations={this.addQuotations}
-                nOrder={qt}
+                nQuotation={qt}
                 key={qt}
               />
             );
@@ -120,7 +118,7 @@ class UserProfile extends React.Component {
             color="info"
             onClick={this.FinishQuotations}
           >
-            Finalizar
+            Enviar Pedido
           </Button>
         </div>
       </>
