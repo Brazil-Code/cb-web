@@ -117,7 +117,7 @@ class Login extends Component {
               <NotificationAlert ref="notificationAlert" />
             </div>
 
-            <form onClick={this.getUserFoto} onSubmit={this.login} id="form">
+            <form onSubmit={this.login} id="form">
               <label htmlFor="userName">Usuário</label>
               <input
                 type="text"
