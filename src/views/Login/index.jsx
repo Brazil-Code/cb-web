@@ -13,7 +13,7 @@ class Login extends Component {
       Loading: false,
       Image: ""
     };
-
+    this.getUserFoto = this.getUserFoto.bind(this);
     this.login = this.login.bind(this);
     this.notify = this.notify.bind(this);
     this.handleImage = this.handleImage.bind(this);
@@ -25,7 +25,7 @@ class Login extends Component {
     }
   }
 
-  componentDidUpdate(props) {
+  getUserFoto() {
     this.handleImage(this.state.username);
   }
 
@@ -129,6 +129,7 @@ class Login extends Component {
               <input
                 type="password"
                 autoComplete="true"
+                onFocus={this.getUserFoto}
                 id="current-password"
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}

@@ -16,34 +16,42 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchase: [{ createUser: 1, observation: "teste" }],
-      Quotations: [
-        {
-          link: "http://quotation1.com",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        },
-        {
-          link: "http://teste.com.be",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        },
-        {
-          link: "http://teste.com.be",
-          unitValue: 0,
-          purchaseItem: "",
-          amount: 0,
-          totalValue: 0,
-          file: ""
-        }
-      ]
+      purchase: { createUser: 1, observation: "teste" },
+      Quotations: [],
+      maxQuotations: [1, 2, 3, 4, 5],
+      numQuotation: [1, 2, 3]
     };
+    this.addQuotations = this.addQuotations.bind(this);
+    this.FinishQuotations = this.FinishQuotations.bind(this);
+  }
+
+  addQuotations(data) {
+    let Quotations = [];
+    let equats = false;
+    Quotations.push(...this.state.Quotations);
+    Quotations.map(qt => {
+      if (qt.key === data.key) {
+        qt.link = data.link;
+        qt.unitValue = data.unitValue;
+        qt.purchaseItem = data.purchaseItem;
+        qt.amount = data.amount;
+        qt.totalValue = data.totalValue;
+        qt.file = data.file;
+        equats = true;
+      }
+    });
+    if (equats === false) {
+      Quotations.push(data);
+    }
+    this.setState({ Quotations });
+    console.log(this.state.Quotations);
+  }
+
+  FinishQuotations() {
+    let priceQuotations = this.state.Quotations;
+    let obj = { ...this.state.purchase, priceQuotations };
+
+    console.log(obj);
   }
 
   render() {
@@ -96,12 +104,23 @@ class UserProfile extends React.Component {
               </Card>
             </Col>
           </Row>
-          {this.state.Quotations.map((qt, i) => {
-            return <PriceQuotations key={i} nOrder={i + 1} />;
+          {/* componente aqui */}
+          {this.state.numQuotation.map(qt => {
+            return (
+              <PriceQuotations
+                addQuotations={this.addQuotations}
+                nOrder={qt}
+                key={qt}
+              />
+            );
           })}
 
-          <Button className="btn-fill" color="primary">
-            Save
+          <Button
+            className="btn-fill"
+            color="info"
+            onClick={this.FinishQuotations}
+          >
+            Finalizar
           </Button>
         </div>
       </>
