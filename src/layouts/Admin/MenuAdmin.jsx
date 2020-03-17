@@ -1,15 +1,15 @@
 let menu = [
   {
-    path: "/dashboard", //url sem o admin
-    name: "Dashboard", //Nome no menu
-    icon: "tim-icons icon-chart-pie-36", //icone
-    layout: "/admin" //tipo de layout padrao adm
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "tim-icons icon-chart-pie-36",
+    layout: "/admin"
   },
   {
-    path: "/order", //url sem o admin
-    name: "Ordem De Compras", //Nome no menu
-    icon: "tim-icons icon-chart-pie-36", //icone
-    layout: "/admin" //tipo de layout padrao adm
+    path: "/purchase-request",
+    name: "Pedido de Compra",
+    icon: "tim-icons icon-bag-16",
+    layout: "/admin"
   }
 ];
 
