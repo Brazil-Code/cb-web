@@ -11,9 +11,30 @@ class Login {
     sessionStorage.setItem("ltoken", user[0].data.token);
   }
 
-  Logout() {
+  logOut() {
     sessionStorage.removeItem("ltoken");
     sessionStorage.removeItem("user");
+  }
+
+  getToken() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.token;
+  }
+  getFirstName() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.firstname;
+  }
+  getLastName() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.lastname;
+  }
+  getEmail() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.email;
+  }
+  getId() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.id;
   }
 }
 

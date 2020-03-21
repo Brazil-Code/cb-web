@@ -1,6 +1,7 @@
 import React from "react";
 import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
 import req from "../api/priceQuotations";
+import getToken from "../services/login";
 // reactstrap components
 import {
   Button,
