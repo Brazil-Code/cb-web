@@ -18,6 +18,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import UserService from "../../services/login";
 
 // reactstrap components
 import {
@@ -67,10 +68,7 @@ class AdminNavbar extends React.Component {
     }
   };
   logout(e) {
-    sessionStorage.removeItem("ltoken");
-    sessionStorage.removeItem("firstName");
-    sessionStorage.removeItem("lastName");
-    sessionStorage.removeItem("email");
+    UserService.Logout();
     this.props.history.replace("/");
   }
   // this function opens and closes the collapse on small devices

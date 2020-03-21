@@ -1,5 +1,6 @@
 import React from "react";
 import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
+import req from "../api/priceQuotations";
 // reactstrap components
 import {
   Button,
@@ -16,24 +17,36 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchase: { createUser: 1, observation: "teste" },
+      observation: "",
+      purchase: { createUser: sessionStorage.getItem("id") },
       Quotations: [],
       maxQuotations: [1, 2, 3, 4, 5],
       numQuotation: [1, 2, 3]
     };
     this.addQuotations = this.addQuotations.bind(this);
     this.FinishQuotations = this.FinishQuotations.bind(this);
+    this.addPurchase = this.addPurchase.bind(this);
+  }
+
+  async addPurchase() {
+    let purchase = await {
+      ...this.state.purchase,
+      purchaseItem: this.state.observation
+    };
+    this.setState({ purchase });
+    console.log(this.state.purchase);
   }
 
   addQuotations(data) {
     let Quotations = [];
     let equats = false;
     Quotations.push(...this.state.Quotations);
+
     Quotations.map(qt => {
       if (qt.key === data.key) {
         qt.link = data.link;
         qt.unitValue = data.unitValue;
-        qt.purchaseItem = data.purchaseItem;
+        qt.observation = data.observation;
         qt.amount = data.amount;
         qt.totalValue = data.totalValue;
         qt.file = data.file;
@@ -43,15 +56,14 @@ class UserProfile extends React.Component {
     if (equats === false) {
       Quotations.push(data);
     }
-    this.setState({ Quotations });
     console.log(this.state.Quotations);
+    return this.setState({ Quotations });
   }
 
   FinishQuotations() {
     let priceQuotations = this.state.Quotations;
     let obj = { ...this.state.purchase, priceQuotations };
-
-    console.log(obj);
+    Headers.console.log(req.addQuotations(obj));
   }
 
   render() {
@@ -90,12 +102,24 @@ class UserProfile extends React.Component {
                   <Row>
                     <Col className="pr-md-1" md="12">
                       <FormGroup>
-                        <label>Observação</label>
+                        <label>Descrição do produto:</label>
                         <Input
                           placeholder="Observações gerais sobre o produto"
                           type="text"
+                          value={this.state.observation}
+                          onChange={e =>
+                            this.setState({ observation: e.target.value })
+                          }
                         />
                       </FormGroup>
+                      <Button
+                        className="btn-fill"
+                        size="sm"
+                        color="primary"
+                        onClick={this.addPurchase}
+                      >
+                        salvar
+                      </Button>
                     </Col>
                   </Row>
                 </CardBody>
