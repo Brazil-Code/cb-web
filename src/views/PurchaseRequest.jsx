@@ -99,6 +99,11 @@ class UserProfile extends React.Component {
         })
         .catch(error => {
           console.log(error);
+          this.notify(
+            "tr",
+            "danger",
+            "verifique todos os campos e tente novamente."
+          );
           this.setState({ loading: false });
         });
     }
