@@ -22,11 +22,11 @@ class Login {
   }
   getFirstName() {
     let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.firstname;
+    return data.firstName;
   }
   getLastName() {
     let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.lastname;
+    return data.lastName;
   }
   getEmail() {
     let data = JSON.parse(sessionStorage.getItem("user"));
@@ -35,6 +35,10 @@ class Login {
   getId() {
     let data = JSON.parse(sessionStorage.getItem("user"));
     return data.id;
+  }
+  getUserName() {
+    let data = JSON.parse(sessionStorage.getItem("user"));
+    return data.username;
   }
 }
 

@@ -162,7 +162,8 @@ class Notifications extends React.Component {
                     <Row>
                       <Col className="ml-auto mr-auto text-center" md="6">
                         <CardTitle tag="h4">
-                          Notifications Places<p className="category">
+                          Notifications Places
+                          <p className="category">
                             Click to view notifications
                           </p>
                         </CardTitle>
