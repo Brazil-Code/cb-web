@@ -1,4 +1,5 @@
 import React from "react";
+import userService from "../services/login";
 
 // reactstrap components
 import {
@@ -44,7 +45,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Username</label>
                           <Input
-                            defaultValue={sessionStorage.getItem("userName")}
+                            defaultValue={userService.getUserName()}
                             placeholder="Username"
                             type="text"
                           />
@@ -58,7 +59,7 @@ class UserProfile extends React.Component {
                           <Input
                             placeholder="mike@email.com"
                             type="email"
-                            value={sessionStorage.getItem("email")}
+                            value={userService.getEmail()}
                           />
                         </FormGroup>
                       </Col>
@@ -68,7 +69,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>First Name</label>
                           <Input
-                            defaultValue={sessionStorage.getItem("firstName")}
+                            defaultValue={userService.getFirstName()}
                             placeholder="Company"
                             type="text"
                           />
@@ -78,7 +79,7 @@ class UserProfile extends React.Component {
                         <FormGroup>
                           <label>Last Name</label>
                           <Input
-                            defaultValue={sessionStorage.getItem("lastName")}
+                            defaultValue={userService.getLastName()}
                             placeholder="Last Name"
                             type="text"
                           />
@@ -110,9 +111,9 @@ class UserProfile extends React.Component {
                         src={sessionStorage.getItem(`imageProfile`)}
                       />
                       <h5 className="title">
-                        {sessionStorage.getItem("firstName") +
+                        {userService.getFirstName() +
                           " " +
-                          sessionStorage.getItem("lastName")}
+                          userService.getLastName()}
                       </h5>
                     </a>
                     <p className="description">Ceo/Co-Founder</p>

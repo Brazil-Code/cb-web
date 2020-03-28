@@ -1,5 +1,9 @@
 import React from "react";
 import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
+import Quotation from "../services/order/priceQuotations";
+import userService from "../services/login";
+import NotificationAlert from "react-notification-alert";
+
 // reactstrap components
 import {
   Button,
@@ -9,31 +13,53 @@ import {
   FormGroup,
   Input,
   Row,
-  Col
+  Col,
+  Spinner
 } from "reactstrap";
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchase: { createUser: 1, observation: "teste" },
+      observation: "",
+      purchase: { createUser: userService.getId() },
       Quotations: [],
       maxQuotations: [1, 2, 3, 4, 5],
-      numQuotation: [1, 2, 3]
+      numQuotation: [1, 2, 3],
+      loading: false
     };
     this.addQuotations = this.addQuotations.bind(this);
     this.FinishQuotations = this.FinishQuotations.bind(this);
+    this.addPurchase = this.addPurchase.bind(this);
+    this.validations = this.validations.bind(this);
+  }
+
+  async addPurchase() {
+    let purchase = await {
+      ...this.state.purchase,
+      purchaseItem: this.state.observation
+    };
+    this.setState({ purchase });
+    console.log(this.state.purchase);
+  }
+  validations() {
+    let error = [];
+    if (this.state.Quotations.length < 3) {
+      error.push("por favor inserir no minimo 3 cotacoes");
+    }
+    return error;
   }
 
   addQuotations(data) {
     let Quotations = [];
     let equats = false;
     Quotations.push(...this.state.Quotations);
+
     Quotations.map(qt => {
       if (qt.key === data.key) {
         qt.link = data.link;
         qt.unitValue = data.unitValue;
-        qt.purchaseItem = data.purchaseItem;
+        qt.observation = data.observation;
         qt.amount = data.amount;
         qt.totalValue = data.totalValue;
         qt.file = data.file;
@@ -48,15 +74,64 @@ class UserProfile extends React.Component {
   }
 
   FinishQuotations() {
-    let priceQuotations = this.state.Quotations;
-    let obj = { ...this.state.purchase, priceQuotations };
+    this.setState({ loading: true });
+    let error = this.validations();
+    if (error.length > 0) {
+      error.map(error => {
+        this.notify("tr", "danger", error);
+        this.setState({ loading: false });
+      });
+      return;
+    } else {
+      let priceQuotations = this.state.Quotations;
+      let obj = { ...this.state.purchase, priceQuotations };
+      console.log(obj);
+      Quotation.addQuotations(obj)
+        .then(sucess => {
+          if (sucess.status === 201) {
+            this.notify(
+              "tr",
+              "info",
+              "Pedido de Compra registrado com sucesso."
+            );
+          }
+          this.setState({ loading: false });
+        })
+        .catch(error => {
+          console.log(error);
+          this.notify(
+            "tr",
+            "danger",
+            "verifique todos os campos e tente novamente."
+          );
+          this.setState({ loading: false });
+        });
+    }
+  }
 
-    console.log(obj);
+  notify(place, type, mgs) {
+    var type = type;
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>{mgs}</div>
+        </div>
+      ),
+      type: type,
+      icon: "tim-icons icon-alert-circle-exc",
+      autoDismiss: 3
+    };
+    this.refs.notificationAlert.notificationAlert(options);
   }
 
   render() {
     return (
       <>
+        <div className="react-notification-alert-container">
+          <NotificationAlert ref="notificationAlert" />
+        </div>
         <div className="content">
           <Row>
             <Col md="12">
@@ -80,7 +155,7 @@ class UserProfile extends React.Component {
                       <FormGroup>
                         <label>Usuário</label>
                         <Input
-                          defaultValue={sessionStorage.getItem("userName")}
+                          defaultValue={userService.getUserName()}
                           type="text"
                           disabled
                         />
@@ -90,12 +165,24 @@ class UserProfile extends React.Component {
                   <Row>
                     <Col className="pr-md-1" md="12">
                       <FormGroup>
-                        <label>Observação</label>
+                        <label>Descrição do produto:</label>
                         <Input
                           placeholder="Observações gerais sobre o produto"
                           type="text"
+                          value={this.state.observation}
+                          onChange={e =>
+                            this.setState({ observation: e.target.value })
+                          }
                         />
                       </FormGroup>
+                      <Button
+                        className="btn-fill"
+                        size="sm"
+                        color="primary"
+                        onClick={this.addPurchase}
+                      >
+                        salvar
+                      </Button>
                     </Col>
                   </Row>
                 </CardBody>
@@ -118,7 +205,7 @@ class UserProfile extends React.Component {
             color="info"
             onClick={this.FinishQuotations}
           >
-            Enviar Pedido
+            {this.state.loading === false ? "Enviar Pedido" : "Aguarde ..."}
           </Button>
         </div>
       </>

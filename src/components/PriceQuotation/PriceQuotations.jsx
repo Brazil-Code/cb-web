@@ -1,8 +1,16 @@
 import React from "react";
-import { Card, CardHeader, CardBody, FormGroup, Input, Row, Col, Button } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Input,
+  Row,
+  Col,
+  Button
+} from "reactstrap";
 
 class PriceQuotations extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -10,7 +18,7 @@ class PriceQuotations extends React.Component {
       key: this.props.nQuotation,
       link: "",
       unitValue: "",
-      purchaseItem: "",
+      observation: "",
       amount: "",
       totalValue: 0,
       file: ""
@@ -29,7 +37,7 @@ class PriceQuotations extends React.Component {
       key: await this.state.key,
       link: await this.state.link,
       unitValue: await this.state.unitValue,
-      purchaseItem: await this.state.purchaseItem,
+      observation: await this.state.observation,
       amount: await this.state.amount,
       totalValue: await this.state.totalValue,
       file: await this.state.file
@@ -108,9 +116,9 @@ class PriceQuotations extends React.Component {
                     <label>Observacao</label>
                     <Input
                       type="text"
-                      value={this.state.purchaseItem}
+                      value={this.state.observation}
                       onChange={e =>
-                        this.setState({ purchaseItem: e.target.value })
+                        this.setState({ observation: e.target.value })
                       }
                     />
                   </FormGroup>

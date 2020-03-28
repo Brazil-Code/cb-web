@@ -3,6 +3,7 @@ import req from "../../api/index";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
 import firebase from "../../firebase/";
+import UserService from "../../services/login";
 
 class Login extends Component {
   constructor(props) {
@@ -50,22 +51,12 @@ class Login extends Component {
     this.setState({ Loading: true });
     e.preventDefault();
 
-    await req
-      .post("/login", {
-        username: this.state.username,
-        password: this.state.password
-      })
+    await UserService.logar(this.state.username, this.state.password)
       .then(data => {
-        this.setState({ error: false });
-        sessionStorage.setItem("ltoken", data.data.token);
-        sessionStorage.setItem("firstName", data.data.firstName);
-        sessionStorage.setItem("lastName", data.data.lastName);
-        sessionStorage.setItem("email", data.data.email);
-        sessionStorage.setItem("imageProfile", this.state.Image);
-        sessionStorage.setItem("userName", this.state.username);
-        this.props.history.replace("/admin/dashboard");
+        UserService.setUser(data);
+        window.location.href = "/admin/dashboard";
       })
-      .catch(error => {
+      .catch(err => {
         this.setState({ error: true });
         this.notify("tr");
         this.setState({ Loading: false });
