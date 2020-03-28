@@ -1,6 +1,7 @@
 import axios from "axios";
+import config_qa from "./config_qa.json";
 
 export default axios.create({
-  baseURL: "https://cb-authentication-service.herokuapp.com",
+  baseURL: config_qa.AUTH_URL,
   responseType: "application/json"
 });

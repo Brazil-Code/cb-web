@@ -88,7 +88,6 @@ class PriceQuotations extends React.Component {
                   <FormGroup>
                     <label>Quantidade</label>
                     <Input
-                      placeholder="Quantidade do produto"
                       type="text"
                       value={this.state.amount}
                       type="number"
@@ -102,7 +101,7 @@ class PriceQuotations extends React.Component {
                     <label>Total</label>
                     <Input
                       type="text"
-                      value={this.state.totalValue}
+                      value={ "R$ " + this.state.totalValue }
                       onChange={e =>
                         this.setState({ totalValue: e.target.value })
                       }
@@ -113,7 +112,7 @@ class PriceQuotations extends React.Component {
 
                 <Col className="px-md-3" md="12">
                   <FormGroup>
-                    <label>Observacao</label>
+                    <label>Observação</label>
                     <Input
                       type="text"
                       value={this.state.observation}
