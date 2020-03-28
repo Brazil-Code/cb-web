@@ -68,7 +68,7 @@ class AdminNavbar extends React.Component {
     }
   };
   logout(e) {
-    UserService.Logout();
+    UserService.logOut();
     this.props.history.replace("/");
   }
   // this function opens and closes the collapse on small devices
