@@ -1,7 +1,7 @@
 import axios from "../../api/index";
 
 class Login {
-  async logar(username, password) {
+  async login(username, password) {
     return await axios.post("/login", { username, password });
   }
 
@@ -16,29 +16,34 @@ class Login {
     sessionStorage.removeItem("user");
   }
 
+  data = JSON.parse(sessionStorage.getItem("user"));
+
   getToken() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.token;
+    return this.data.token;
   }
+
   getFirstName() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.firstName;
+    return this.data.firstName;
   }
+
   getLastName() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.lastName;
+    return this.data.lastName;
   }
+
+  getArea() {
+    return this.data.area.name;
+  }
+
   getEmail() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.email;
+    return this.data.email;
   }
+
   getId() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.id;
+    return this.data.id;
   }
+
   getUserName() {
-    let data = JSON.parse(sessionStorage.getItem("user"));
-    return data.username;
+    return this.data.username;
   }
 }
 

@@ -28,19 +28,8 @@ class Footer extends React.Component {
     return (
       <footer className="footer">
         <Container fluid>
-          <Nav>
-            <NavItem>
-              <NavLink href="#">Brasil Code</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">Sobre Nos</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#">Help Desk</NavLink>
-            </NavItem>
-          </Nav>
           <div className="copyright">
-            © {new Date().getFullYear()} Create for Brasil Code.
+              © {new Date().getFullYear()} Powered by <a href="#">Brazil Code</a>.
           </div>
         </Container>
       </footer>

@@ -24,30 +24,36 @@ class UserProfile extends React.Component {
       observation: "",
       purchase: { createUser: userService.getId() },
       Quotations: [],
-      maxQuotations: [1, 2, 3, 4, 5],
+      maxQuotations: 5,
+      minQuotations: 3,
       numQuotation: [1, 2, 3],
-      loading: false
+      loading: false,
     };
+
     this.addQuotations = this.addQuotations.bind(this);
     this.FinishQuotations = this.FinishQuotations.bind(this);
     this.addPurchase = this.addPurchase.bind(this);
-    this.validations = this.validations.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
-  async addPurchase() {
-    let purchase = await {
+  addPurchase() {
+    let purchase = {
       ...this.state.purchase,
       purchaseItem: this.state.observation
     };
     this.setState({ purchase });
-    console.log(this.state.purchase);
   }
-  validations() {
-    let error = [];
-    if (this.state.Quotations.length < 3) {
-      error.push("por favor inserir no minimo 3 cotacoes");
+
+  /**
+   * Check if the given amount of PriceQuotation is between minimum and maximum accepted values
+   */
+  validateForm() {
+    if (this.state.Quotations.length < this.minQuotations || this.state.Quotations > this.maxQuotations) {
+      this.formIsValid = false;
+    } else {
+      this.formIsValid = true;
     }
-    return error;
+    return this.formIsValid;
   }
 
   addQuotations(data) {
@@ -70,17 +76,14 @@ class UserProfile extends React.Component {
       Quotations.push(data);
     }
     this.setState({ Quotations });
-    console.log(this.state.Quotations);
   }
 
   FinishQuotations() {
     this.setState({ loading: true });
-    let error = this.validations();
-    if (error.length > 0) {
-      error.map(error => {
-        this.notify("tr", "danger", error);
-        this.setState({ loading: false });
-      });
+    if (this.validateForm()) {
+      let errorMessage = "Favor inserir entre " + this.state.minQuotations + " e " + this.state.maxQuotations + " cotações";
+      this.notify("tr", "danger", errorMessage);
+      this.setState({ loading: false });
       return;
     } else {
       let priceQuotations = this.state.Quotations;
@@ -145,7 +148,7 @@ class UserProfile extends React.Component {
                       <FormGroup>
                         <label>Área</label>
                         <Input
-                          defaultValue="Informatica"
+                          defaultValue={userService.getArea()}
                           disabled
                           type="text"
                         />
@@ -167,7 +170,6 @@ class UserProfile extends React.Component {
                       <FormGroup>
                         <label>Descrição do produto:</label>
                         <Input
-                          placeholder="Observações gerais sobre o produto"
                           type="text"
                           value={this.state.observation}
                           onChange={e =>

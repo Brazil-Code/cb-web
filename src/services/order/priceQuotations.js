@@ -1,10 +1,11 @@
 import axios from "../../api";
 import userService from "../login/index";
+import url from "../../api/config_qa.json";
 
 class Quotation {
   async addQuotations(data) {
     return await axios.post(
-      "https://cb-purchase-service.herokuapp.com/purchase-request",
+      url.PURCH_URL + "/purchase-request",
       data,
       this.tokenPayload()
     );
