@@ -1,0 +1,5 @@
+{
+    "AUTH_URL": "http://cb-authentication-service.herokuapp.com",
+    "ADM_URL": "https://cb-administration-service.herokuapp.com",
+    "PURCH_URL": "https://cb-purchase-service.herokuapp.com"
+}

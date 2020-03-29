@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import req from "../../api/index";
+import logo from "../../assets/img/logo.png";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
 import firebase from "../../firebase/";
+import UserService from "../../services/login";
 
 class Login extends Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class Login extends Component {
       Loading: false,
       Image: ""
     };
-    this.getUserFoto = this.getUserFoto.bind(this);
+    this.getUserPic = this.getUserPic.bind(this);
     this.login = this.login.bind(this);
     this.notify = this.notify.bind(this);
     this.handleImage = this.handleImage.bind(this);
@@ -25,7 +27,7 @@ class Login extends Component {
     }
   }
 
-  getUserFoto() {
+  getUserPic() {
     this.handleImage(this.state.username);
   }
 
@@ -39,8 +41,8 @@ class Login extends Component {
       .then(url => {
         this.setState({ Image: url });
       })
-      .catch(error => {
-        if (this.state.username === "") {
+      .catch(_error => {
+        if (_error) {
           this.setState({ Image: "" });
         }
       });
@@ -50,22 +52,12 @@ class Login extends Component {
     this.setState({ Loading: true });
     e.preventDefault();
 
-    await req
-      .post("/login", {
-        username: this.state.username,
-        password: this.state.password
-      })
+    await UserService.login(this.state.username, this.state.password)
       .then(data => {
-        this.setState({ error: false });
-        sessionStorage.setItem("ltoken", data.data.token);
-        sessionStorage.setItem("firstName", data.data.firstName);
-        sessionStorage.setItem("lastName", data.data.lastName);
-        sessionStorage.setItem("email", data.data.email);
-        sessionStorage.setItem("imageProfile", this.state.Image);
-        sessionStorage.setItem("userName", this.state.username);
-        this.props.history.replace("/admin/dashboard");
+        UserService.setUser(data);
+        window.location.href = "/admin/dashboard";
       })
-      .catch(error => {
+      .catch(_error => {
         this.setState({ error: true });
         this.notify("tr");
         this.setState({ Loading: false });
@@ -79,12 +71,12 @@ class Login extends Component {
       place: place,
       message: (
         <div>
-          <div>Verifique o usuario e senha e tente novamente</div>
+          <div>Usuário / Senha inválidos</div>
         </div>
       ),
       type: type,
       icon: "tim-icons icon-alert-circle-exc",
-      autoDismiss: 3
+      autoDismiss: 5
     };
     this.refs.notificationAlert.notificationAlert(options);
   };
@@ -96,12 +88,16 @@ class Login extends Component {
           <div className="left">
             {this.state.Image !== "" ? (
               <img
-                className="ImgameLogo"
+                className="userImg"
                 src={this.state.Image}
-                alt="img"
+                alt="user image"
               ></img>
             ) : (
-              <h1>Brazil Code</h1>
+              <img
+                className="logo"
+                src={logo}
+                alt="logo"
+              ></img>
             )}
           </div>
           <div className="right">
@@ -129,7 +125,7 @@ class Login extends Component {
               <input
                 type="password"
                 autoComplete="true"
-                onFocus={this.getUserFoto}
+                onFocus={this.getUserPic}
                 id="current-password"
                 value={this.state.password}
                 onChange={e => this.setState({ password: e.target.value })}

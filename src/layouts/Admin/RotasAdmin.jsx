@@ -1,15 +1,15 @@
 import Dashboard from "../../views/Dashboard";
 import UserProfile from "../../views/UserProfile";
 import Notifications from "../../views/Notifications";
-import Order from "../../views/Order";
+import PurchaseRequest from "../../views/PurchaseRequest";
 
 let Rotas = [
   {
-    path: "/dashboard", //url sem o admin
-    name: "Dashboard", //Nome no menu
-    icon: "tim-icons icon-chart-pie-36", //icone
-    layout: "/admin", //tipo de layout padrao adm
-    component: Dashboard //disponibiliza o componente para registro
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "tim-icons icon-chart-pie-36",
+    layout: "/admin",
+    component: Dashboard
   },
   {
     path: "/user-profile",
@@ -26,11 +26,11 @@ let Rotas = [
     layout: "/admin"
   },
   {
-    path: "/Order", //url sem o admin
-    name: "Pedido", //Nome no menu
-    icon: "tim-icons icon-chart-pie-36", //icone
-    component: Order,
-    layout: "/admin" //tipo de layout padrao adm
+    path: "/purchase-request",
+    name: "Pedido de Compra",
+    icon: "tim-icons icon-bag-16",
+    component: PurchaseRequest,
+    layout: "/admin"
   },
   {
     path: "/*",
