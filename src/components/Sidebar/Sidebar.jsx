@@ -64,7 +64,6 @@ class Sidebar extends React.Component {
           <a
             href={logo.outterLink}
             className="simple-text logo-mini"
-            target="_blank"
             onClick={this.props.toggleSidebar}
           >
             {/* <div className="logo-img">
@@ -77,7 +76,6 @@ class Sidebar extends React.Component {
             <a
               href={logo.outterLink}
               className="simple-text logo-normal"
-              target="_blank"
               onClick={this.props.toggleSidebar}
             >
               {logo.text}
