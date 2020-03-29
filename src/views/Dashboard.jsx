@@ -46,8 +46,8 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
-                      <h5 className="card-category">Total Shipments</h5>
-                      <CardTitle tag="h2">Performance</CardTitle>
+                      <h5 className="card-category">Projeção de Gastos</h5>
+                      <CardTitle tag="h2">Despesas</CardTitle>
                     </Col>
                     <Col sm="6">
                       <ButtonGroup
@@ -71,7 +71,7 @@ class Dashboard extends React.Component {
                             type="radio"
                           />
                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Accounts
+                            Compras
                           </span>
                           <span className="d-block d-sm-none">
                             <i className="tim-icons icon-single-02" />
@@ -93,7 +93,7 @@ class Dashboard extends React.Component {
                             type="radio"
                           />
                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Purchases
+                            Recebido
                           </span>
                           <span className="d-block d-sm-none">
                             <i className="tim-icons icon-gift-2" />
@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
                             type="radio"
                           />
                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Sessions
+                            Projeções Futuras
                           </span>
                           <span className="d-block d-sm-none">
                             <i className="tim-icons icon-tap-02" />

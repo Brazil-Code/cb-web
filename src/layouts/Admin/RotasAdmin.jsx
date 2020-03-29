@@ -13,7 +13,7 @@ let Rotas = [
   },
   {
     path: "/user-profile",
-    name: "User Profile",
+    name: "Perfil de Usuário",
     icon: "tim-icons icon-single-02",
     component: UserProfile,
     layout: "/admin"

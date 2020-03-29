@@ -86,21 +86,21 @@ let chartExample1 = {
     return {
       labels: [
         "JAN",
-        "FEB",
+        "FEV",
         "MAR",
-        "APR",
-        "MAY",
+        "ABR",
+        "MAI",
         "JUN",
         "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
+        "AGO",
+        "SET",
+        "OUT",
         "NOV",
-        "DEC"
+        "DEZ"
       ],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Projeção do mês",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#1f8ef1",
@@ -131,21 +131,21 @@ let chartExample1 = {
     return {
       labels: [
         "JAN",
-        "FEB",
+        "FEV",
         "MAR",
-        "APR",
-        "MAY",
+        "ABR",
+        "MAI",
         "JUN",
         "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
+        "AGO",
+        "SET",
+        "OUT",
         "NOV",
-        "DEC"
+        "DEZ"
       ],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Projeção do mês",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#1f8ef1",
@@ -176,21 +176,21 @@ let chartExample1 = {
     return {
       labels: [
         "JAN",
-        "FEB",
+        "FEV",
         "MAR",
-        "APR",
-        "MAY",
+        "ABR",
+        "MAI",
         "JUN",
         "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
+        "AGO",
+        "SET",
+        "OUT",
         "NOV",
-        "DEC"
+        "DEZ"
       ],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Projeção do mês",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#1f8ef1",
@@ -226,7 +226,7 @@ let chartExample2 = {
     gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
     return {
-      labels: ["JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+      labels: ["JUL", "AGO", "SET", "OUT", "NOV"],
       datasets: [
         {
           label: "Data",
@@ -344,10 +344,10 @@ const chartExample4 = {
     gradientStroke.addColorStop(0, "rgba(66,134,121,0)"); //green colors
 
     return {
-      labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
+      labels: ["JUL", "AGO", "SET", "OUT", "NOV"],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Projeção do mês",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#00d6b4",

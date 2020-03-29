@@ -207,11 +207,8 @@ class AdminNavbar extends React.Component {
                         href="/admin/user-profile"
                         className="nav-item"
                       >
-                        Profile
+                        Perfil
                       </DropdownItem>
-                    </NavLink>
-                    <NavLink tag="li">
-                      <DropdownItem className="nav-item">Settings</DropdownItem>
                     </NavLink>
                     <DropdownItem divider tag="li" />
                     <NavLink tag="li">
