@@ -32,7 +32,7 @@ class UserProfile extends React.Component {
                     <Row>
                       <Col className="pr-md-1" md="4">
                         <FormGroup>
-                          <label>Company (disabled)</label>
+                          <label>Empresa</label>
                           <Input
                             defaultValue="Brazil Code"
                             disabled
@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
                       </Col>
                       <Col className="px-md-1" md="4">
                       <FormGroup>
-                          <label>First Name</label>
+                          <label>Nome</label>
                           <Input
                             defaultValue={userService.getFirstName()}
                             type="text"
@@ -51,7 +51,7 @@ class UserProfile extends React.Component {
                       </Col>
                       <Col className="pl-md-1" md="4">
                       <FormGroup>
-                          <label>Last Name</label>
+                          <label>Último nome</label>
                           <Input
                             defaultValue={userService.getLastName()}
                             type="text"
@@ -60,19 +60,20 @@ class UserProfile extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-md-1" md="6">
+                      <Col className="pr-md-1" md="4">
                       <FormGroup>
-                          <label>Username</label>
+                          <label>Usuário</label>
                           <Input
                             defaultValue={userService.getUserName()}
+                            disabled
                             type="text"
                           />
                         </FormGroup>
                       </Col>
-                      <Col className="pl-md-1" md="6">
+                      <Col className="pl-md-1" md="8">
                         <FormGroup>
                           <label htmlFor="exampleInputEmail1">
-                            Email address
+                            E-mail
                           </label>
                           <Input
                             type="email"
