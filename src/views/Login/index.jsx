@@ -43,6 +43,7 @@ class Login extends Component {
       .getDownloadURL()
       .then(url => {
         this.setState({ Image: url });
+        sessionStorage.setItem("imageProfile", this.state.Image);
       })
       .catch(_error => {
         if (_error) {

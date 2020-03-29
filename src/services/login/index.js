@@ -45,6 +45,10 @@ class Login {
   getUserName() {
     return this.data.username;
   }
+
+  getFullName() {
+    return this.data.firstName + " " + this.data.lastName;
+  }
 }
 
 export default new Login();
