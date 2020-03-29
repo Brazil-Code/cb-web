@@ -88,7 +88,6 @@ class UserProfile extends React.Component {
     } else {
       let priceQuotations = this.state.Quotations;
       let obj = { ...this.state.purchase, priceQuotations };
-      console.log(obj);
       Quotation.addQuotations(obj)
         .then(sucess => {
           if (sucess.status === 201) {
@@ -100,12 +99,11 @@ class UserProfile extends React.Component {
           }
           this.setState({ loading: false });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(_error => {
           this.notify(
             "tr",
             "danger",
-            "verifique todos os campos e tente novamente."
+            "Verifique todos os campos e tente novamente."
           );
           this.setState({ loading: false });
         });
