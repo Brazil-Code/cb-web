@@ -15,6 +15,9 @@ class Login extends Component {
       Loading: false,
       Image: ""
     };
+
+    let errorMessage = "";
+
     this.getUserPic = this.getUserPic.bind(this);
     this.login = this.login.bind(this);
     this.notify = this.notify.bind(this);
@@ -58,9 +61,17 @@ class Login extends Component {
         window.location.href = "/admin/dashboard";
       })
       .catch(_error => {
+        if (_error.message.indexOf("403") > -1) {
         this.setState({ error: true });
-        this.notify("tr");
-        this.setState({ Loading: false });
+          this.errorMessage = "Usuário / Senha inválidos";
+          this.notify("tr");
+          this.setState({ Loading: false });
+        } else {
+          this.setState({ error: true });
+          this.errorMessage = "Ocorreu um erro inesperado";
+          this.notify("tr");
+          this.setState({ Loading: false });
+        }
       });
   };
 
@@ -71,7 +82,7 @@ class Login extends Component {
       place: place,
       message: (
         <div>
-          <div>Usuário / Senha inválidos</div>
+          <div>{ this.errorMessage }</div>
         </div>
       ),
       type: type,
