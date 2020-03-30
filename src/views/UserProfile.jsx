@@ -25,14 +25,44 @@ class UserProfile extends React.Component {
       firstName: userService.getFirstName(),
       lastName: userService.getLastName(),
       email: userService.getEmail(),
-      edit: false
+      edit: false,
+      loading: false
     };
 
-    this.enableEdit = this.enableEdit.bind(this);
+    this.enableUpdate = this.enableUpdate.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
+  /**
+   * Disable loading and updates session storage's information
+   */
+  handleSuccess() {
+    this.setState({ loading: false });
+    this.setState({ edit: false });
+
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    user.firstName = this.state.firstName;
+    user.lastName = this.state.lastName;
+    user.email = this.state.email;
+
+    sessionStorage.setItem("user", JSON.stringify(user));
+  }
+
+  /**
+   * Disable loading
+   */
+  handleError() {
+    this.setState({ loading: false });
+    this.setState({ edit: false });
+  }
+
+  /**
+   * Call REST API to update user's information
+   */
   updateProfile() {
+    this.setState({ loading: true })
     api.put('users/' + userService.getId(), {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -42,27 +72,26 @@ class UserProfile extends React.Component {
         headers: {
           Authorization: userService.getToken(),
         }
-      }
-    )
+      })
       .then(success => {
-        this.setState({ edit: false })
+        this.handleSuccess();
         alert(success.status);
-      }
-    )
+      })
       .catch(_error => {
-        if (_error.status == 404) {
+        if (_error.status == 400) {
+          this.handleError();
           alert(_error.value);
         } else {
+          this.handleError();
           alert('erro inesperado');
         }
-    }
-    )
-    .finally(
-      this.setState({ edit: false })
-    );
+      })
   }
 
-  enableEdit() {
+  /**
+   * Enables Update button
+   */
+  enableUpdate() {
     this.setState({ edit: true });
   }
 
@@ -144,10 +173,10 @@ class UserProfile extends React.Component {
                     this.state.edit
                     ?
                     <Button className="btn-fill" color="primary" type="submit" onClick={this.updateProfile}>
-                      Salvar
+                      { this.state.loading ? 'Atualizando...' : 'Atualizar' }
                     </Button>
                     :
-                    <Button className="btn-fill" color="primary" type="submit" onClick={this.enableEdit}>
+                    <Button className="btn-fill" color="primary" type="submit" onClick={this.enableUpdate}>
                       Editar
                     </Button>
                   }
