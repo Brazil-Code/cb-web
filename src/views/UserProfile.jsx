@@ -1,5 +1,6 @@
 import React from "react";
 import userService from "../services/login";
+import api from '../services/administration/userService';
 
 // reactstrap components
 import {
@@ -17,6 +18,54 @@ import {
 } from "reactstrap";
 
 class UserProfile extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: userService.getFirstName(),
+      lastName: userService.getLastName(),
+      email: userService.getEmail(),
+      edit: false
+    };
+
+    this.enableEdit = this.enableEdit.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
+  }
+
+  updateProfile() {
+    api.put('users/' + userService.getId(), {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email
+    },
+      {
+        headers: {
+          Authorization: userService.getToken(),
+        }
+      }
+    )
+      .then(success => {
+        this.setState({ edit: false })
+        alert(success.status);
+      }
+    )
+      .catch(_error => {
+        if (_error.status == 404) {
+          alert(_error.value);
+        } else {
+          alert('erro inesperado');
+        }
+    }
+    )
+    .finally(
+      this.setState({ edit: false })
+    );
+  }
+
+  enableEdit() {
+    this.setState({ edit: true });
+  }
+
   render() {
     return (
       <>
@@ -25,7 +74,7 @@ class UserProfile extends React.Component {
             <Col md="8">
               <Card>
                 <CardHeader>
-                  <h5 className="title">Editar Perfil</h5>
+                  <h5 className="title">Meu Perfil</h5>
                 </CardHeader>
                 <CardBody>
                   <Form>
@@ -44,8 +93,10 @@ class UserProfile extends React.Component {
                       <FormGroup>
                           <label>Nome</label>
                           <Input
-                            defaultValue={userService.getFirstName()}
+                            defaultValue={this.state.firstName}
                             type="text"
+                            disabled={this.state.edit == false}
+                            onChange={e => this.setState({firstName: e.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -53,8 +104,10 @@ class UserProfile extends React.Component {
                       <FormGroup>
                           <label>Último nome</label>
                           <Input
-                            defaultValue={userService.getLastName()}
+                            defaultValue={this.state.lastName}
                             type="text"
+                            disabled={this.state.edit == false}
+                            onChange={e => this.setState({lastName: e.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -77,7 +130,9 @@ class UserProfile extends React.Component {
                           </label>
                           <Input
                             type="email"
-                            value={userService.getEmail()}
+                            value={this.state.email}
+                            onChange={e => this.setState({email: e.target.value})}
+                            disabled={this.state.edit == false}
                           />
                         </FormGroup>
                       </Col>
@@ -85,9 +140,17 @@ class UserProfile extends React.Component {
                   </Form>
                 </CardBody>
                 <CardFooter>
-                  <Button className="btn-fill" color="primary" type="submit">
-                    Salvar
-                  </Button>
+                  {
+                    this.state.edit
+                    ?
+                    <Button className="btn-fill" color="primary" type="submit" onClick={this.updateProfile}>
+                      Salvar
+                    </Button>
+                    :
+                    <Button className="btn-fill" color="primary" type="submit" onClick={this.enableEdit}>
+                      Editar
+                    </Button>
+                  }
                 </CardFooter>
               </Card>
             </Col>
