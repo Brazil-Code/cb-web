@@ -29,7 +29,7 @@ class Footer extends React.Component {
       <footer className="footer">
         <Container fluid>
           <div className="copyright">
-              © {new Date().getFullYear()} Powered by <a href="#">Brazil Code</a>.
+              © {new Date().getFullYear()} Powered by <a href="#" onClick={e => e.preventDefault()}>Brazil Code</a>.
           </div>
         </Container>
       </footer>

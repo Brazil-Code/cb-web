@@ -74,7 +74,7 @@ class Dashboard extends React.Component {
                             Compras
                           </span>
                           <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-single-02" />
+                            <i className="tim-icons icon-cart" />
                           </span>
                         </Button>
                         <Button
@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
                             Recebido
                           </span>
                           <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-gift-2" />
+                            <i className="tim-icons icon-coins" />
                           </span>
                         </Button>
                         <Button
@@ -118,7 +118,7 @@ class Dashboard extends React.Component {
                             Projeções Futuras
                           </span>
                           <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-tap-02" />
+                            <i className="tim-icons icon-calendar-60" />
                           </span>
                         </Button>
                       </ButtonGroup>
