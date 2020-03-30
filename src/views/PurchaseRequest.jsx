@@ -1,6 +1,6 @@
 import React from "react";
 import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
-import Quotation from "../services/order/priceQuotations";
+import PurchaseRequestService from "../services/purchase-service/purchase-request/purchaseRequestService";
 import userService from "../services/login";
 import NotificationAlert from "react-notification-alert";
 
@@ -31,9 +31,9 @@ class UserProfile extends React.Component {
     };
 
     this.addQuotations = this.addQuotations.bind(this);
-    this.FinishQuotations = this.FinishQuotations.bind(this);
+    this.finishQuotations = this.finishQuotations.bind(this);
     this.addPurchase = this.addPurchase.bind(this);
-    this.validateForm = this.validateForm.bind(this);
+    this.formIsValid = this.formIsValid.bind(this);
   }
 
   addPurchase() {
@@ -47,13 +47,12 @@ class UserProfile extends React.Component {
   /**
    * Check if the given amount of PriceQuotation is between minimum and maximum accepted values
    */
-  validateForm() {
+  formIsValid() {
     if (this.state.Quotations.length < this.minQuotations || this.state.Quotations > this.maxQuotations) {
-      this.formIsValid = false;
+      return false;
     } else {
-      this.formIsValid = true;
+      return true;
     }
-    return this.formIsValid;
   }
 
   addQuotations(data) {
@@ -78,17 +77,17 @@ class UserProfile extends React.Component {
     this.setState({ Quotations });
   }
 
-  FinishQuotations() {
+  finishQuotations() {
     this.setState({ loading: true });
-    if (this.validateForm()) {
+    if (!this.formIsValid()) {
       let errorMessage = "Favor inserir entre " + this.state.minQuotations + " e " + this.state.maxQuotations + " cotações";
       this.notify("tr", "danger", errorMessage);
       this.setState({ loading: false });
       return;
     } else {
       let priceQuotations = this.state.Quotations;
-      let obj = { ...this.state.purchase, priceQuotations };
-      Quotation.addQuotations(obj)
+      let purchaseRequestObj = { ...this.state.purchase, priceQuotations };
+      PurchaseRequestService.createPurchaseRequest(purchaseRequestObj)
         .then(sucess => {
           if (sucess.status === 201) {
             this.notify(
@@ -203,7 +202,7 @@ class UserProfile extends React.Component {
           <Button
             className="btn-fill"
             color="info"
-            onClick={this.FinishQuotations}
+            onClick={this.finishQuotations}
           >
             {this.state.loading === false ? "Enviar Pedido" : "Aguarde ..."}
           </Button>
