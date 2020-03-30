@@ -1,9 +1,9 @@
-import axios from "../../api";
-import userService from "../login/index";
-import url from "../../api/config_qa.json";
+import axios from "../../../api";
+import userService from "../../login/index";
+import url from "../../../api/config_qa.json";
 
-class Quotation {
-  async addQuotations(data) {
+class PurchaseRequestService {
+  async createPurchaseRequest(data) {
     return await axios.post(
       url.PURCH_URL + "/purchase-request",
       data,
@@ -21,4 +21,4 @@ class Quotation {
   }
 }
 
-export default new Quotation();
+export default new PurchaseRequestService();
