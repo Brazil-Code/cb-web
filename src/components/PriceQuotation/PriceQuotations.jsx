@@ -59,7 +59,7 @@ class PriceQuotations extends React.Component {
               <Row>
                 <Col className="pr-md-1" md="3">
                   <FormGroup>
-                    <label>Link URL:</label>
+                    <label>Link URL</label>
                     <Input
                       placeholder="http://expemplo.com/produto"
                       type="text"

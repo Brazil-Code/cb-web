@@ -121,7 +121,7 @@ class UserProfile extends React.Component {
       ),
       type: type,
       icon: "tim-icons icon-alert-circle-exc",
-      autoDismiss: 3
+      autoDismiss: 5
     };
     this.refs.notificationAlert.notificationAlert(options);
   }
@@ -165,7 +165,7 @@ class UserProfile extends React.Component {
                   <Row>
                     <Col className="pr-md-1" md="12">
                       <FormGroup>
-                        <label>Descrição do produto:</label>
+                        <label>Descrição do produto</label>
                         <Input
                           type="text"
                           value={this.state.observation}

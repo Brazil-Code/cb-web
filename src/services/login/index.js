@@ -2,7 +2,7 @@ import axios from "../../api/index";
 
 class Login {
   async login(username, password) {
-    return await axios.post("/login", { username, password });
+    return await axios.post("login", { username, password });
   }
 
   async setUser(...data) {
