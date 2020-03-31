@@ -1,6 +1,7 @@
 import React from "react";
 import userService from "../services/login";
 import api from '../services/administration/userService';
+import NotificationAlert from "react-notification-alert";
 
 // reactstrap components
 import {
@@ -55,7 +56,23 @@ class UserProfile extends React.Component {
    */
   handleError() {
     this.setState({ loading: false });
-    this.setState({ edit: false });
+  }
+
+  notify(place, type, mgs, error) {
+    var type = type;
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>{mgs}</div>
+        </div>
+      ),
+      type: type,
+      icon: error ? "tim-icons icon-alert-circle-exc" : "tim-icons icon-check-2",
+      autoDismiss: 5
+    };
+    this.refs.notificationAlert.notificationAlert(options);
   }
 
   /**
@@ -73,17 +90,32 @@ class UserProfile extends React.Component {
           Authorization: userService.getToken(),
         }
       })
-      .then(success => {
+      .then(_success => {
         this.handleSuccess();
-        alert(success.status);
+        this.notify(
+          "tr",
+          "success",
+          "Perfil atualizado com sucesso.",
+          false
+        );
       })
-      .catch(_error => {
-        if (_error.status == 400) {
+      .catch(response => {
+        if (response.message.indexOf('400') > -1) {
           this.handleError();
-          alert(_error.value);
+          this.notify(
+            "tr",
+            "danger",
+            "O e-mail informado já está em uso.",
+            true
+          );
         } else {
           this.handleError();
-          alert('erro inesperado');
+          this.notify(
+            "tr",
+            "danger",
+            "Ocorreu um erro inesperado.",
+            true
+          );
         }
       })
   }
@@ -98,6 +130,9 @@ class UserProfile extends React.Component {
   render() {
     return (
       <>
+        <div className="react-notification-alert-container">
+          <NotificationAlert ref="notificationAlert" />
+        </div>
         <div className="content">
           <Row>
             <Col md="8">
@@ -124,7 +159,7 @@ class UserProfile extends React.Component {
                           <Input
                             defaultValue={this.state.firstName}
                             type="text"
-                            disabled={this.state.edit == false}
+                            disabled={this.state.edit === false}
                             onChange={e => this.setState({firstName: e.target.value})}
                           />
                         </FormGroup>
@@ -135,7 +170,7 @@ class UserProfile extends React.Component {
                           <Input
                             defaultValue={this.state.lastName}
                             type="text"
-                            disabled={this.state.edit == false}
+                            disabled={this.state.edit === false}
                             onChange={e => this.setState({lastName: e.target.value})}
                           />
                         </FormGroup>
@@ -161,7 +196,7 @@ class UserProfile extends React.Component {
                             type="email"
                             value={this.state.email}
                             onChange={e => this.setState({email: e.target.value})}
-                            disabled={this.state.edit == false}
+                            disabled={this.state.edit === false}
                           />
                         </FormGroup>
                       </Col>
@@ -192,11 +227,11 @@ class UserProfile extends React.Component {
                     <div className="block block-two" />
                     <div className="block block-three" />
                     <div className="block block-four" />
-                    <a href="#" onClick={e => e.preventDefault()}>
+                    <a href="#pablo" onClick={e => e.preventDefault()}>
                       <img
-                        alt="user profile picture"
                         className="avatar"
                         src={sessionStorage.getItem(`imageProfile`)}
+                        alt="avatar"
                       />
                       <h5 className="title">
                         {userService.getFullName()}
