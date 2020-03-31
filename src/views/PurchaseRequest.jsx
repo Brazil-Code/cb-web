@@ -13,8 +13,7 @@ import {
   FormGroup,
   Input,
   Row,
-  Col,
-  Spinner
+  Col
 } from "reactstrap";
 
 class UserProfile extends React.Component {
@@ -93,7 +92,8 @@ class UserProfile extends React.Component {
             this.notify(
               "tr",
               "info",
-              "Pedido de Compra registrado com sucesso."
+              "Pedido de Compra registrado com sucesso.",
+              false
             );
           }
           this.setState({ loading: false });
@@ -102,14 +102,15 @@ class UserProfile extends React.Component {
           this.notify(
             "tr",
             "danger",
-            "Verifique todos os campos e tente novamente."
+            "Verifique todos os campos e tente novamente.",
+            true
           );
           this.setState({ loading: false });
         });
     }
   }
 
-  notify(place, type, mgs) {
+  notify(place, type, mgs, error) {
     var type = type;
     var options = {};
     options = {
@@ -120,7 +121,7 @@ class UserProfile extends React.Component {
         </div>
       ),
       type: type,
-      icon: "tim-icons icon-alert-circle-exc",
+      icon: error ? "tim-icons icon-alert-circle-exc" : "icon-check-2",
       autoDismiss: 5
     };
     this.refs.notificationAlert.notificationAlert(options);

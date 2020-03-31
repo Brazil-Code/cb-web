@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import req from "../../api/index";
 import logo from "../../assets/img/logo.png";
 import "./Login.css";
 import NotificationAlert from "react-notification-alert";
@@ -15,8 +14,6 @@ class Login extends Component {
       Loading: false,
       Image: ""
     };
-
-    let errorMessage = "";
 
     this.getUserPic = this.getUserPic.bind(this);
     this.login = this.login.bind(this);
@@ -102,7 +99,7 @@ class Login extends Component {
               <img
                 className="userImg"
                 src={this.state.Image}
-                alt="user image"
+                alt="User"
               ></img>
             ) : (
               <img
