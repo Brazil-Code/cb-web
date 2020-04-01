@@ -1,8 +1,7 @@
 import React from "react";
-import PriceQuotations from "../components/PriceQuotation/PriceQuotations";
-import PurchaseRequestService from "../services/purchase-service/purchase-request/purchaseRequestService";
 import userService from "../services/login";
 import NotificationAlert from "react-notification-alert";
+import api from "../api/purch";
 
 // reactstrap components
 import {
@@ -13,104 +12,83 @@ import {
   FormGroup,
   Input,
   Row,
-  Col
+  Col,
+  Form
 } from "reactstrap";
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      observation: "",
-      purchase: { createUser: userService.getId() },
-      Quotations: [],
-      maxQuotations: 5,
-      minQuotations: 3,
-      numQuotation: [1, 2, 3],
-      loading: false,
+      createUser: userService.getId(),
+      purchaseItem: "",
+      priceQuotations: [
+        {
+          key: "1",
+          link: "",
+          unitValue: "",
+          observation: "",
+          amount: "",
+          totalValue: "",
+          file: ""
+        },
+        {
+          key: "2",
+          link: "",
+          unitValue: "",
+          observation: "",
+          amount: "",
+          totalValue: "",
+          file: ""
+        },
+        {
+          key: "3",
+          link: "",
+          unitValue: "",
+          observation: "",
+          amount: "",
+          totalValue: "",
+          file: ""
+        }
+      ],
+
+      loading: false
     };
 
-    this.addQuotations = this.addQuotations.bind(this);
-    this.finishQuotations = this.finishQuotations.bind(this);
-    this.addPurchase = this.addPurchase.bind(this);
-    this.formIsValid = this.formIsValid.bind(this);
+    this.sendQuotation = this.sendQuotation.bind(this);
+    this.handleAmount = this.handleAmount.bind(this);
   }
 
-  addPurchase() {
-    let purchase = {
-      ...this.state.purchase,
-      purchaseItem: this.state.observation
-    };
-    this.setState({ purchase });
-  }
-
-  /**
-   * Check if the given amount of PriceQuotation is between minimum and maximum accepted values
-   */
-  formIsValid() {
-    if (this.state.Quotations.length < this.minQuotations || this.state.Quotations > this.maxQuotations) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  addQuotations(data) {
-    let Quotations = [];
-    let equats = false;
-    Quotations.push(...this.state.Quotations);
-
-    Quotations.map(qt => {
-      if (qt.key === data.key) {
-        qt.link = data.link;
-        qt.unitValue = data.unitValue;
-        qt.observation = data.observation;
-        qt.amount = data.amount;
-        qt.totalValue = data.totalValue;
-        qt.file = data.file;
-        equats = true;
-      }
-    });
-    if (equats === false) {
-      Quotations.push(data);
-    }
-    this.setState({ Quotations });
-  }
-
-  finishQuotations() {
+  async sendQuotation(e) {
     this.setState({ loading: true });
-    if (!this.formIsValid()) {
-      let errorMessage = "Favor inserir entre " + this.state.minQuotations + " e " + this.state.maxQuotations + " cotações";
-      this.notify("tr", "danger", errorMessage);
-      this.setState({ loading: false });
-      return;
-    } else {
-      let priceQuotations = this.state.Quotations;
-      let purchaseRequestObj = { ...this.state.purchase, priceQuotations };
-      PurchaseRequestService.createPurchaseRequest(purchaseRequestObj)
-        .then(sucess => {
-          if (sucess.status === 201) {
-            this.notify(
-              "tr",
-              "info",
-              "Pedido de Compra registrado com sucesso.",
-              false
-            );
-          }
-          this.setState({ loading: false });
-        })
-        .catch(_error => {
-          this.notify(
-            "tr",
-            "danger",
-            "Verifique todos os campos e tente novamente.",
-            true
-          );
-          this.setState({ loading: false });
-        });
-    }
+    e.preventDefault();
+    this.handleAmount();
+    api.post("purchase-request", this.state, {
+        headers: {
+          Authorization: userService.getToken()
+        }
+      })
+      .then(_sucess => {
+        this.notify("tr", "success", "Pedido enviado com sucesso");
+        this.setState({ loading: false });
+      })
+      .catch(_error => {
+        this.notify(
+          "tr",
+          "danger",
+          "Erro ao cadastrar pedido de compra, favor contatar o Administrador do sistema"
+        );
+        this.setState({ loading: false });
+      });
   }
 
-  notify(place, type, mgs, error) {
+  handleAmount() {
+    this.state.priceQuotations.map(qt => {
+      qt.totalValue = qt.unitValue * qt.amount;
+    });
+  }
+
+  notify(place, type, mgs) {
     var type = type;
     var options = {};
     options = {
@@ -121,7 +99,7 @@ class UserProfile extends React.Component {
         </div>
       ),
       type: type,
-      icon: error ? "tim-icons icon-alert-circle-exc" : "icon-check-2",
+      icon: "tim-icons icon-alert-circle-exc",
       autoDismiss: 5
     };
     this.refs.notificationAlert.notificationAlert(options);
@@ -134,79 +112,136 @@ class UserProfile extends React.Component {
           <NotificationAlert ref="notificationAlert" />
         </div>
         <div className="content">
-          <Row>
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <h5 className="title">Pedido de Compra</h5>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>Área</label>
-                        <Input
-                          defaultValue={userService.getArea()}
-                          disabled
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-md-1" md="6">
-                      <FormGroup>
-                        <label>Usuário</label>
-                        <Input
-                          defaultValue={userService.getUserName()}
-                          type="text"
-                          disabled
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-md-1" md="12">
-                      <FormGroup>
-                        <label>Descrição do produto</label>
-                        <Input
-                          type="text"
-                          value={this.state.observation}
-                          onChange={e =>
-                            this.setState({ observation: e.target.value })
-                          }
-                        />
-                      </FormGroup>
-                      <Button
-                        className="btn-fill"
-                        size="sm"
-                        color="primary"
-                        onClick={this.addPurchase}
-                      >
-                        salvar
-                      </Button>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          {/* componente aqui */}
-          {this.state.numQuotation.map(qt => {
-            return (
-              <PriceQuotations
-                addQuotations={this.addQuotations}
-                nQuotation={qt}
-                key={qt}
-              />
-            );
-          })}
+          <Form onSubmit={this.sendQuotation}>
+            <Row>
+              <Col md="12">
+                <Card>
+                  <CardHeader>
+                    <h5 className="title">Pedido de Compra</h5>
+                  </CardHeader>
+                  <CardBody>
+                    <Row>
+                      <Col className="pr-md-1" md="6">
+                        <FormGroup>
+                          <label>Área</label>
+                          <Input
+                            defaultValue={userService.getArea()}
+                            disabled
+                            type="text"
+                            required
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col className="px-md-1" md="6">
+                        <FormGroup>
+                          <label>Usuário</label>
+                          <Input
+                            defaultValue={userService.getUserName()}
+                            type="text"
+                            disabled
+                            required
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col className="pr-md-1" md="12">
+                        <FormGroup>
+                          <label>Descrição do produto</label>
+                          <Input
+                            type="text"
+                            defaultValue={this.state.purchaseItem}
+                            onChange={e => {
+                              this.setState({ purchaseItem: e.target.value });
+                            }}
+                            required
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
 
-          <Button
-            className="btn-fill"
-            color="info"
-            onClick={this.finishQuotations}
-          >
-            {this.state.loading === false ? "Enviar Pedido" : "Aguarde ..."}
-          </Button>
+            {/* quotation1 */}
+            {this.state.priceQuotations.map(qt => {
+              return (
+                <Row key={qt.key} onClick={this.handleAmount()}>
+                  <Col md="12">
+                    <Card>
+                      <CardHeader>
+                        <h5 className="title">{qt.key}° Cotação</h5>
+                      </CardHeader>
+
+                      <CardBody>
+                        <Row>
+                          <Col className="pr-md-1" md="3">
+                            <FormGroup>
+                              <label>Link URL</label>
+                              <Input
+                                placeholder="http://expemplo.com/produto"
+                                type="text"
+                                defaultValue={qt.link}
+                                onChange={e => (qt.link = e.target.value)}
+                                required
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col className="px-md-1" md="4">
+                            <FormGroup>
+                              <label>Valor Unitário</label>
+                              <Input
+                                placeholder="R$"
+                                name="price"
+                                type="number"
+                                defaultValue={qt.unitValue}
+                                onChange={e => (qt.unitValue = e.target.value)}
+                                required
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col className="px-md-1" md="5">
+                            <FormGroup>
+                              <label>Quantidade</label>
+                              <Input
+                                type="text"
+                                type="number"
+                                defaultValue={qt.amount}
+                                onChange={e => (qt.amount = e.target.value)}
+                                required
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col className="px-md-3" md="12">
+                            <FormGroup>
+                              <label>Observação</label>
+                              <Input
+                                type="text"
+                                defaultValue={qt.observation}
+                                onChange={e =>
+                                  (qt.observation = e.target.value)
+                                }
+                                required
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              );
+            })}
+            {/* End quotation1 */}
+
+            <Button className="btn-fill" color="primary" type="submit">
+              {this.state.loading === false ? "Enviar Pedido" : "Aguarde ..."}
+            </Button>
+          </Form>
         </div>
       </>
     );
