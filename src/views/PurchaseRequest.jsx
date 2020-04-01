@@ -63,27 +63,23 @@ class UserProfile extends React.Component {
     this.setState({ loading: true });
     e.preventDefault();
     this.handleAmount();
-    api
-      .post("purchase-request", this.state, {
+    api.post("purchase-request", this.state, {
         headers: {
           Authorization: userService.getToken()
         }
       })
-      .then(sucess => {
+      .then(_sucess => {
         this.notify("tr", "success", "Pedido enviado com sucesso");
         this.setState({ loading: false });
       })
       .catch(_error => {
-        console.log(_error);
         this.notify(
           "tr",
           "danger",
-          "Erro ao enviar pedido, entre em contato com o ADM"
+          "Erro ao cadastrar pedido de compra, favor contatar o Administrador do sistema"
         );
         this.setState({ loading: false });
       });
-
-    console.log(this.state);
   }
 
   handleAmount() {
@@ -175,7 +171,7 @@ class UserProfile extends React.Component {
                   <Col md="12">
                     <Card>
                       <CardHeader>
-                        <h5 className="title">{qt.key} Cotação</h5>
+                        <h5 className="title">{qt.key}° Cotação</h5>
                       </CardHeader>
 
                       <CardBody>
