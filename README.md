@@ -1,9 +1,18 @@
 # cb-web
-## Web Application
+Web Application of the Clean Budget project
 
-- Author: Gabriel Guarido de Oliveira
-- Created at: 02/19/2020
+## Technologies
+* React
+* NodeJS
+* Redux
+* Express
+* Axios
 
----
+## Developers
+1. Andrew Pereira
+2. Gabriel Guarido
 
-Web Application for the project: <b>Clean Budget</b>
+## Release Notes
+| Starting Date | Last Deploy | Version |
+|---|---|---|
+| Mar 3 2020 | Mar 31 2020 | 1.2.4 |
